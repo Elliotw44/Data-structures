@@ -37,27 +37,21 @@ void List::Reverse()
 	
 	if(size <= 1)
 		return;
-	else if(size == 2)
-		{
-			forwardPtr = head -> next;
-			head -> next = NULL;
-			forwardPtr -> next = head;
-			head = forwardPtr;
-			forwardPtr = NULL;
-			return;
-		}
 	else
 		{
-			middlePtr = head -> next;
-			head -> next = NULL;
-			for(int i = 1; i < size; i++)
-			 {
-				forwardPtr = middlePtr -> next;
-				middlePtr -> next = head;
-				head = middlePtr;
-				middlePtr = forwardPtr;
-			 }
-			return;
+		  middlePtr = head -> next;
+		  head -> next = NULL;
+		  while(forwardPtr != NULL)
+		   {
+		     forwardPtr = middlePtr -> next;
+		     middlePtr -> next = head;
+		     head = middlePtr;
+		     middlePtr = forwardPtr;
+		     forwardPtr = forwardPtr->next;
+		   }
+		middlePtr->next = head;
+		head = middlePtr;
+		return;
 	    }				
 }
 
