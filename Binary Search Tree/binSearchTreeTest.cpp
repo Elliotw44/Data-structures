@@ -36,8 +36,22 @@ int main()
   tree.removeItem(15); 
   cout << endl<<"15 removed from the tree" << endl << endl;
   tree.BFSPrint(cout);
+  tree.removeItem(8);
+  tree.removeItem(5);
+  cout << endl << "8 then 5 have been removed from the tree" <<endl << endl;
+  tree.BFSPrint(cout);
+  tree.removeItem(12);
+  tree.removeItem(20);
+  cout<< endl<< "12 then 20 have been removed from the tree"<<endl << endl;
+  tree.BFSPrint(cout);
+  tree.removeItem(2);
+  tree.removeItem(1);
+  tree.removeItem(7);
+  tree.removeItem(4);
+  tree.removeItem(13);
+  tree.removeItem(14);
   cout<< "printing the whole tree after values being removed"<<endl;
-  //tree.BFSPrint(cout);
+  tree.BFSPrint(cout);
   
 
 

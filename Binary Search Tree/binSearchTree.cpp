@@ -80,6 +80,11 @@ void BinSearchTree::postOrderPrint(ostream& out) const
 
 void BinSearchTree::BFSPrint(ostream& out) const
 {
+    if(root == NULL)
+	{
+		cout << "The Tree is empty!"<<endl;
+		return;
+	}
 	int curLevel = 1;
 	int nextLevel = 0;
 	queue<Node*> que;
@@ -237,7 +242,8 @@ void BinSearchTree::removeItem(const int anItem)
       if(!lookup(anItem))
 			cout<< "The item isn't in the tree."<< endl;
       else
-			deleteTraverse(root, root, anItem);	
+			deleteTraverse(root, root, anItem);
+      nodeCount --;
     }
 }
 
@@ -254,6 +260,12 @@ void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int a
 	     || (subtreeRoot->rightChild != NULL && 
 		 subtreeRoot->leftChild == NULL)) 
 	    {
+		  if(parent == subtreeRoot){
+			  if(parent->rightChild != NULL)
+				  subtreeRoot = parent->rightChild;
+			  else
+				  subtreeRoot = parent->leftChild;
+		  }
 	      adopt1(subtreeRoot, parent);
 	    }
 	  else if(subtreeRoot->leftChild != NULL && 
@@ -263,8 +275,14 @@ void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int a
 	    }
 	  else if(subtreeRoot->leftChild == NULL && 
 		  subtreeRoot->rightChild == NULL)
-	    {	
-	      if(parent->leftChild == subtreeRoot)
+	    {
+		  if(subtreeRoot == root)
+		  {
+			root = NULL;
+			delete subtreeRoot;
+			subtreeRoot = NULL;
+		  }
+	      else if(parent->leftChild == subtreeRoot)
 		  {	
 		 	parent->leftChild = NULL;
 		  	delete subtreeRoot;
