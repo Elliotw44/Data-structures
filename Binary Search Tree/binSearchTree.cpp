@@ -7,7 +7,7 @@
 */
 
 
-#include "binsearchtree.h"
+#include "binSearchTree.h"
 using namespace std;
 
 BinSearchTree::BinSearchTree()
@@ -86,18 +86,18 @@ void BinSearchTree::BFSPrint(ostream& out) const
 	que.push(root);
 	while(!que.empty())
 	{
-		node* tmp = que.front();
+		Node* tmp = que.front();
 		que.pop();
 		curLevel--;
 		out << tmp->item << " ";
-		if(tmp-> left != NULL)
+		if(tmp-> leftChild != NULL)
 		{
-			que.push(tmp->left);
+			que.push(tmp->leftChild);
 			nextLevel += 1;
 		}
-		if(tmp->right != NULL)
+		if(tmp->rightChild != NULL)
 		{
-			que.push(tmp->right);
+			que.push(tmp->rightChild);
 			nextLevel += 1;
 		}
 		if(curLevel == 0 )
@@ -165,7 +165,7 @@ bool BinSearchTree::lookupTraverse(const Node* subtreeRoot,const int anItem, boo
  { 
    if(anItem == subtreeRoot->item)
   	 Found = true;
-  else if (Key < subtreeRoot->item)
+  else if (anItem < subtreeRoot->item)
    lookupTraverse(subtreeRoot->leftChild, anItem, Found); 
   else
    lookupTraverse(subtreeRoot->rightChild, anItem, Found);
@@ -197,8 +197,8 @@ void BinSearchTree::insertTraverse(Node*& subtreeRoot, const int anItem)
      insertTraverse((subtreeRoot->rightChild), anItem);
   }
 }
-
-int BinSearchTree::HeightDifference(const Node* node)
+/*
+int BinSearchTree::HeightDifference(const Node* subnode)
 {
 
 	if(node == NULL)
@@ -208,7 +208,7 @@ int BinSearchTree::HeightDifference(const Node* node)
 	int heightR = 1 + getHeight(node->rightChild);
 	int heightL = 1 + getHeight(node->leftChild);
 	return (heightL - heightR)
-	}
+	
 }
 
 bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool& Formed) const
@@ -219,16 +219,16 @@ bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool& Formed) const
 	Formed = false;
  Formed = FormedTraverse(subtreeRoot->leftChild, Formed); 
  Formed = FormedTraverse(subtreeRoot->rightChild, Formed);  
-}
-
+}*/
+/*
 bool BinSearchTree::WellFormed(const Node* subtreeRoot)
 {
 	bool Formed = true;
 	Formed = FormedTraverse(subtreeRoot, Formed);
 	return Formed;
-}
+}*/
 
-void BinSearchTree::remove(const int anItem)
+void BinSearchTree::removeItem(const int anItem)
 {	
   if(root == NULL)
 	cout << " The tree is empty."<< endl;
@@ -241,7 +241,7 @@ void BinSearchTree::remove(const int anItem)
     }
 }
 
-void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node*& parent, const int anItem)
+void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem)
 {
   if(subtreeRoot == NULL)
       return;

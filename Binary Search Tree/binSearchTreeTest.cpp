@@ -1,4 +1,4 @@
-#include "binsearchtree.h"
+#include "binSearchTree.h"
 using namespace std;
 
 int main() 
@@ -21,15 +21,23 @@ int main()
   tree.insert(12);
   tree.insert(13);
   cout << "printing the whole tree below" << endl;
-  t1.BFSPrint(cout);
+  tree.BFSPrint(cout);
 
   cout<< "testing remove cases below" << endl;
-  // t1.remove(10);
-  // t1.remove(20);
-  // t1.remove(7);
-  // t1.remove(4);
+  tree.removeItem(10);
+  cout <<endl << "10 removed from the tree" << endl << endl;
+  tree.BFSPrint(cout);
+  tree.removeItem(16); 
+  cout << endl<<"16 removed from the tree" << endl << endl;
+  tree.BFSPrint(cout);
+  tree.removeItem(6); 
+  cout << endl<<"6 removed from the tree" << endl << endl;
+  tree.BFSPrint(cout); 
+  tree.removeItem(15); 
+  cout << endl<<"15 removed from the tree" << endl << endl;
+  tree.BFSPrint(cout);
   cout<< "printing the whole tree after values being removed"<<endl;
-  t1.BFSPrint(cout);
+  //tree.BFSPrint(cout);
   
 
 

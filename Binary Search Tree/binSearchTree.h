@@ -56,7 +56,7 @@ int getNodeCount() const;
 */
 void insert(const int anItem);
 
-bool delete(const int anItem);
+void removeItem(const int anItem);
 
 /**
 * This looks up a key in the and then returns true if it finds it, otherwise false
@@ -147,7 +147,7 @@ void insertTraverse(Node*& subtreeRoot, const int anItem);
 */
 bool lookupTraverse(const Node* subtreeRoot,int anItem, bool& Found);
 
-void deleteTraverse(Node*& subtreeRoot, Node*& parent, const int anItem);
+void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
 
 void adopt1(Node* subtreeRoot, Node*& parent);
 
