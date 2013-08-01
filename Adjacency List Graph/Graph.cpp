@@ -1,11 +1,18 @@
 
 #include "Graph.h"
+#include <queue>
 
 Graph::Graph(int n){
 	map<int, int> element;
+	Vertex V(std::numeric_limits<int>::max());
 	adjList.assign(n, element);
+	vInfo.assign(n, v);
 	numVert = n;
 	numEdge = 0;
+}
+
+bool Graph::dfsFind(string value){
+
 }
 
 int Graph::getNumVert() const {
@@ -54,5 +61,32 @@ void Graph::print() {
 			cout<< "Edge connecting vertex " << i << " to vertex " << it->first << " with weight " << it->second <<endl;
 		cout << endl << endl << endl;
 	}
+/*
+void BST::printTreeBfs(Node* root){
+	int curLevel = 1;
+	int nextLevel = 0;
+	bool lastLeft = true;
+	bool lastRight = true;
+	queue<Node> que;
+	q.push(root);
+	while(!que.empty()){
+		Node* tmp=	que.front();
+		que.pop();
+		cout<< tmp->item << " ";
+		curLevel --;
+		if(tmp->left != 0){
+			nextLevel += 1;
+		}
+		if (tmp->right != 0){
+			nextLevel += 1;
+		}
+		if(curLevel == 0){
+			cout << endl;
+			curLevel = nextLevel;
+			nextLevel = 0;
+		}
+   }
+  }*/
+
 }
 

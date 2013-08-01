@@ -5,7 +5,9 @@
 #include <list>
 #include <map>
 #include <iostream>
+#include <limits>
 #include "Edge.h"
+#include "Vertex.h"
 using namespace std;
 class Graph
 {
@@ -14,7 +16,7 @@ public:
 	int numEdge;
     //vector that holds a map of all adjacent vertices
 	vector<map<int, int> > adjList;
-
+    vector<Vertex> vInfo;
 	Graph(int n);
 
 	int getNumVert() const;

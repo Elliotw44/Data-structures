@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
-#include "conio.h"
+//#include "conio.h"
 #include "Graph.h"
 
 using namespace std;
@@ -31,7 +31,10 @@ int main(){
 	Elz.add(e4);
 	Elz.add(e5);
 	Elz.print();
+	map<int, int>::iterator itr;
+    itr = Elz.findEdge(0,1);
+	cout<< itr->first << " " << itr->second <<endl;
 	
-	_getch();
+	//_getch();
 	return 0;
 }
