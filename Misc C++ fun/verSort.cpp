@@ -38,7 +38,7 @@ int main()
     for(int i=0; i < sortedA.size(); i++)
     	cout<< sortedA[i] << ", ";
     cout<< endl;
-    cout<< binarySearch(sortedA, 6) << endl;
+    cout<< binarySearch(sortedA, 10) << endl;
 	return 0;
 }
 //Function takes to strings s1, and s2 both strings contain version numbers ex(10.2, 1.92, 2.0)
@@ -174,7 +174,7 @@ bool binarySearch(vector<int> array, int item){
 	}
 	while(searchStart != searchEnd){
 		middle = (searchStart + searchEnd) / 2;
-		if(item == array[middle])
+		if(item == array[middle] || item == array[middle+1])
 			return true;
 		else if(item > array[middle])
 			searchStart = middle;
