@@ -2,10 +2,10 @@
  * verSort.cpp
  *
  *  Created on: Aug 1, 2013
- *      Author: eweil
+ *  Elliot Weil
+ *  Contains mergesort, insertion sort, binary Search, and a string compare for strings of version numbers
  */
-//returns true if S1 is smaller then S2
-//returns false if S1 is bigger then S2
+
 #include <iostream>
 #include <list>
 #include <vector>
@@ -15,6 +15,7 @@ bool VersNumComp(string s1, string s2);
 list<string> sortVersionNums(list<string> unsorted);
 vector<int> MergeSort(vector<int> unsorted);
 vector<int> Merge(vector<int> sublist1, vector<int> sublist2);
+bool binarySearch(vector<int> array, int item);
 
 int main()
 {
@@ -37,6 +38,7 @@ int main()
     for(int i=0; i < sortedA.size(); i++)
     	cout<< sortedA[i] << ", ";
     cout<< endl;
+    cout<< binarySearch(sortedA, 6) << endl;
 	return 0;
 }
 //Function takes to strings s1, and s2 both strings contain version numbers ex(10.2, 1.92, 2.0)
@@ -162,6 +164,24 @@ vector<int> Merge(vector<int> sublist1, vector<int> sublist2){
 		}
 	}
 	return sorted;
+}
+bool binarySearch(vector<int> array, int item){
+	int middle;
+	int searchStart = 0;
+	int searchEnd = array.size() - 1;
+	if(item < array[searchStart] || item > array[searchEnd]){
+		return false;
+	}
+	while(searchStart != searchEnd){
+		middle = (searchStart + searchEnd) / 2;
+		if(item == array[middle])
+			return true;
+		else if(item > array[middle])
+			searchStart = middle;
+		else
+			searchEnd = middle;
+	}
+	return false;
 }
 
 
