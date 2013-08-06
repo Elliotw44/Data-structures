@@ -30,7 +30,7 @@ int main()
 		cout<<" "<< *it;
 	cout<<endl;
 	list<string> sortedVs = sortVersionNums(unsortedVs);
-	cout << endl << " The sorted list is below" << endl;
+	cout << endl << "The sorted list is below" << endl;
 	for(list<string>::iterator its = sortedVs.begin(); its != sortedVs.end(); its++)
 			cout<<" "<< *its;
     cout<<endl<<endl;
@@ -190,6 +190,7 @@ void findTuples(vector<int> array){
 	//sort the array
 	vector<int> sorted = MergeSort(array);
 	vector<int> sortedSq(sorted.size(), 0);
+	vector<int> valuesToSearch;
 	//square every value you in the sorted array and store it in a new array
 	int possibleA;
 	for(int i = 0; i < sorted.size(); i++){
@@ -200,7 +201,9 @@ void findTuples(vector<int> array){
 		//for each C check
 		for(int b = (c-1); b > 0; b--){
 			possibleA = sortedSq[c] - sortedSq[b];
-			if(binarySearch(sortedSq, possibleA)){
+			valuesToSearch = sortedSq;
+			valuesToSearch.resize(b);
+			if(binarySearch(valuesToSearch, possibleA)){
 				//check to see if the sqrt is positive or negative
 				if(binarySearch(sorted, sqrt(possibleA))){
 					cout<< sqrt(possibleA) << "^2 + "<< sorted[b]<< "^2 = "<<sorted[c]<<"^2"<< endl;
