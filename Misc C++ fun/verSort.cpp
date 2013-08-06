@@ -9,14 +9,15 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <math.h>
 using namespace std;
 
+void findTuples(vector<int> array);
 bool VersNumComp(string s1, string s2);
 list<string> sortVersionNums(list<string> unsorted);
 vector<int> MergeSort(vector<int> unsorted);
 vector<int> Merge(vector<int> sublist1, vector<int> sublist2);
 bool binarySearch(vector<int> array, int item);
-
 int main()
 {
     string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
@@ -33,12 +34,12 @@ int main()
 	for(list<string>::iterator its = sortedVs.begin(); its != sortedVs.end(); its++)
 			cout<<" "<< *its;
     cout<<endl<<endl;
-    cout<<"The array sorted with mergesort is below." <<endl;
-    vector<int> sortedA = MergeSort(unsort);
-    for(int i=0; i < sortedA.size(); i++)
-    	cout<< sortedA[i] << ", ";
-    cout<< endl;
-    cout<< binarySearch(sortedA, 10) << endl;
+    //cout<<"The array sorted with mergesort is below." <<endl;
+    //vector<int> sortedA = MergeSort(unsort);
+    //for(int=0; i < sortedA.size(); i++)
+    	//cout<< sortedA[i] << ", ";
+    findTuples(unsort);
+    cout<<endl;
 	return 0;
 }
 //Function takes to strings s1, and s2 both strings contain version numbers ex(10.2, 1.92, 2.0)
@@ -172,16 +173,44 @@ bool binarySearch(vector<int> array, int item){
 	if(item < array[searchStart] || item > array[searchEnd]){
 		return false;
 	}
-	while(searchStart != searchEnd){
-		middle = (searchStart + searchEnd) / 2;
+	middle = (searchStart + searchEnd) / 2;
+	while(searchStart != middle && searchEnd != middle){
 		if(item == array[middle] || item == array[middle+1])
 			return true;
 		else if(item > array[middle])
 			searchStart = middle;
 		else
 			searchEnd = middle;
+		middle = (searchStart + searchEnd) / 2;
 	}
 	return false;
 }
+//find all the a^2 + b^2 = c^2 combinations in a given array
+void findTuples(vector<int> array){
+	//sort the array
+	vector<int> sorted = MergeSort(array);
+	vector<int> sortedSq(sorted.size(), 0);
+	//square every value you in the sorted array and store it in a new array
+	int possibleA;
+	for(int i = 0; i < sorted.size(); i++){
+		sortedSq[i] = sorted[i] * sorted[i];
+	}
+	//set the first possible C to the last item then work down to the 3rd spot in the list
+	for(int c = sorted.size() - 1; c > 1; c--){
+		//for each C check
+		for(int b = (c-1); b > 0; b--){
+			possibleA = sortedSq[c] - sortedSq[b];
+			if(binarySearch(sortedSq, possibleA)){
+				//check to see if the sqrt is positive or negative
+				if(binarySearch(sorted, sqrt(possibleA))){
+					cout<< sqrt(possibleA) << "^2 + "<< sorted[b]<< "^2 = "<<sorted[c]<<"^2"<< endl;
+				}
+				else
+				{
+					cout<< sqrt(possibleA)*-1<<"^2 + "<< sorted[b]<<"^2 = "<< sorted[c]<<"^2" << endl;
+				}
 
-
+			}
+		}
+	}
+}
