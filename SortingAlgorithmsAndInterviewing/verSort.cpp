@@ -25,6 +25,8 @@ vector<int> Merge(vector<int> sublist1, vector<int> sublist2);
 bool binarySearch(vector<int> array, int item);
 
 vector<int> selectSort(vector<int> array);
+
+vector<int> quickSort(vector<int> array);
 int main()
 {
     string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
@@ -243,4 +245,25 @@ vector<int> selectSort(vector<int> array){
 		array[minIndex] = tmp;
 	}
 	return array;
+}
+//quick sort implemented for vectors of int
+vector<int> quickSort(vector<int> array){
+	if (array.size() <= 1)
+		return array;
+	vector<int> pivot = (1, array.back());
+	array.pop_back();
+	vector<int> lesserThenPivot;
+	vector<int> greaterThenPivot;
+	for(int i = 0; i < array.size(); i++){
+		if(array[i] <= pivot[0])
+			lesserThenPivot.push_back(array[i]);
+		else
+			greaterThenPivot.push_back(array[i]);
+	}
+	lesserThenPivot = quickSort(lesserThenPivot);
+	greaterThenPivot = quickSort(greaterThenPivot);
+
+	lesserThenPivot.push_back(pivot[0]);
+	lesserThenPivot.insert(lesserThenPivot.end(), greaterThenPivot.begin(), greaterThenPivot.end());
+	return lesserThenPivot;
 }
