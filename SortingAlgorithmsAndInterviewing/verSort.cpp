@@ -34,16 +34,16 @@ int main()
     vector<int> unsort;
     unsort.assign(uns2, uns2+10);
 	list<string> unsortedVs(uns, uns + 8);
-	cout<<"The original unsorted list is below" << endl;
+	cout<<"The original unsorted list of version numbers is below" << endl;
 	for(list<string>::iterator it = unsortedVs.begin(); it != unsortedVs.end(); it++)
 		cout<<" "<< *it;
 	cout<<endl;
 	list<string> sortedVs = sortVersionNums(unsortedVs);
-	cout << endl << "The sorted list is below" << endl;
+	cout << endl << "The sorted list of version numbers is below" << endl;
 	for(list<string>::iterator its = sortedVs.begin(); its != sortedVs.end(); its++)
 			cout<<" "<< *its;
     cout<<endl<<endl;
-    cout<<"The unsorted array is below."<<endl;
+    cout<<"The unsorted array of integers is below."<<endl;
     for(int i = 0;  i < unsort.size(); i++)
     	cout<< unsort[i] << ", ";
     cout<< endl << endl <<"The array sorted with mergesort is below." <<endl;
@@ -52,6 +52,15 @@ int main()
     	cout<< sortedA[i] << ", ";
     cout<<endl<<endl<<"The Tuples for the list above are below."<<endl;
     findTuples(unsort);
+    cout<<endl;
+
+    cout<<"The unsorted array of integers is below."<<endl;
+        for(int i = 0;  i < unsort.size(); i++)
+        	cout<< unsort[i] << ", ";
+    cout<<endl<<"testing quicksort"<<endl;
+    vector<int> quickSorted = quickSort(unsort);
+    for(int i = 0; i < quickSorted.size(); i++)
+        	cout<< sortedA[i] << ", ";
     cout<<endl;
 	return 0;
 }
@@ -248,21 +257,27 @@ vector<int> selectSort(vector<int> array){
 }
 //quick sort implemented for vectors of int
 vector<int> quickSort(vector<int> array){
+	//base case
 	if (array.size() <= 1)
 		return array;
-	vector<int> pivot = (1, array.back());
+	//set the pivot as the last item in the array
+	vector<int> pivot(1, array.back());
+	//remove the pivot from the array
 	array.pop_back();
+	//create two sub vectors, one less then the pivot and one greater then the pivot
 	vector<int> lesserThenPivot;
 	vector<int> greaterThenPivot;
+	//go through the array and insert items into the sub vectors where they belong
 	for(int i = 0; i < array.size(); i++){
 		if(array[i] <= pivot[0])
 			lesserThenPivot.push_back(array[i]);
 		else
 			greaterThenPivot.push_back(array[i]);
 	}
+	//recurse through the vectors creating small and smaller sub vectors to sort
 	lesserThenPivot = quickSort(lesserThenPivot);
 	greaterThenPivot = quickSort(greaterThenPivot);
-
+	//recreate the orginal vector passed in now knowing that everything is sorted correctly
 	lesserThenPivot.push_back(pivot[0]);
 	lesserThenPivot.insert(lesserThenPivot.end(), greaterThenPivot.begin(), greaterThenPivot.end());
 	return lesserThenPivot;
