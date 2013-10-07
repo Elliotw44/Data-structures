@@ -82,6 +82,8 @@ void inOrderPrint(ostream& out) const;
 */
 void postOrderPrint(ostream& out) const;
 
+bool WellFormed();
+
 void BFSPrint(ostream& out) const;
 
 void remove(const int anItem);
@@ -152,6 +154,10 @@ void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
 void adopt1(Node* subtreeRoot, Node*& parent);
 
 void adopt2(Node* subtreeRoot);
+
+int getHeight(const Node* subnode) const;
+
+bool FormedTraverse(const Node* subtreeRoot, bool Formed) const;
 
 Node* inOrderSuc(Node* subtreeRoot);
 };

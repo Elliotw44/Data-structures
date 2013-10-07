@@ -202,36 +202,38 @@ void BinSearchTree::insertTraverse(Node*& subtreeRoot, const int anItem)
      insertTraverse((subtreeRoot->rightChild), anItem);
   }
 }
-/*
-int BinSearchTree::HeightDifference(const Node* subnode)
+
+int BinSearchTree::getHeight(const Node* subnode) const
 {
 
-	if(node == NULL)
-	{
+	if(subnode == NULL)
 		return 0;
-	}
-	int heightR = 1 + getHeight(node->rightChild);
-	int heightL = 1 + getHeight(node->leftChild);
-	return (heightL - heightR)
-	
+	int heightR = getHeight(subnode->rightChild) + 1;
+	int heightL = getHeight(subnode->leftChild) + 1;
+	if(heightR > heightL)
+		return heightR;
+	else
+		return heightL;
 }
 
-bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool& Formed) const
+bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool Formed) const
 {
  if(subtreeRoot == NULL) 
-	 return Formed;
- else if(HeightDifference(subtreeRoot) > 1 || HeightDifference(subtreeRoot) < 0)
-	Formed = false;
- Formed = FormedTraverse(subtreeRoot->leftChild, Formed); 
- Formed = FormedTraverse(subtreeRoot->rightChild, Formed);  
-}*/
-/*
-bool BinSearchTree::WellFormed(const Node* subtreeRoot)
+	 return true;
+ else if(
+		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) > 1) ||
+		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < 0) ||
+		 !FormedTraverse(subtreeRoot->leftChild, Formed) ||
+		 !FormedTraverse(subtreeRoot->rightChild, Formed))
+	return false;
+
+}
+bool BinSearchTree::WellFormed()
 {
 	bool Formed = true;
-	Formed = FormedTraverse(subtreeRoot, Formed);
+	Formed = FormedTraverse(root, Formed);
 	return Formed;
-}*/
+}
 
 void BinSearchTree::removeItem(const int anItem)
 {	
@@ -253,29 +255,37 @@ void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int a
       return;
   else 
     {
+	 //found the item to delete
      if(anItem == subtreeRoot->item)
 	 {
+    // check if the node to be delete has only one child
 	  if((subtreeRoot->leftChild != NULL && 
 	      subtreeRoot->rightChild == NULL) 
 	     || (subtreeRoot->rightChild != NULL && 
 		 subtreeRoot->leftChild == NULL)) 
 	    {
+		  //special case where you haven't recursed yet
 		  if(parent == subtreeRoot){
 			  if(parent->rightChild != NULL)
 				  subtreeRoot = parent->rightChild;
 			  else
 				  subtreeRoot = parent->leftChild;
 		  }
+		  //adopt the one child of the node to be deleted.
 	      adopt1(subtreeRoot, parent);
 	    }
+	  //check if node to be deleted has two children
 	  else if(subtreeRoot->leftChild != NULL && 
 		  subtreeRoot->rightChild != NULL)
 	    {
+		  //adopt both children.
 	      adopt2(subtreeRoot);
 	    }
+	  //node to be deleted is a leaf node(a node with no children)
 	  else if(subtreeRoot->leftChild == NULL && 
 		  subtreeRoot->rightChild == NULL)
 	    {
+		  //check if its the root
 		  if(subtreeRoot == root)
 		  {
 			root = NULL;
@@ -294,6 +304,7 @@ void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int a
 		  }		
 	    }
 	 }
+     //if the item wasn't found recurse through the tree
     else
 	{
 	  parent = subtreeRoot;

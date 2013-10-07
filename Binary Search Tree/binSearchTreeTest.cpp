@@ -3,7 +3,7 @@ using namespace std;
 
 int main() 
 {
-
+  bool treeFormed = false;
   BinSearchTree tree;
   tree.insert(10);
   tree.insert(5);
@@ -22,7 +22,11 @@ int main()
   tree.insert(13);
   cout << "printing the whole tree below" << endl;
   tree.BFSPrint(cout);
-
+  treeFormed = tree.WellFormed();
+  cout<<"is the tree well formed? : "<<treeFormed<<endl;
+  tree.removeItem(7);
+  treeFormed = tree.WellFormed();
+  cout<<"is the tree well formed? : "<<treeFormed<<endl;
   cout<< "testing remove cases below" << endl;
   tree.removeItem(10);
   cout <<endl << "10 removed from the tree" << endl << endl;
