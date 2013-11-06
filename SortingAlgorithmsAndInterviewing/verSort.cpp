@@ -3,7 +3,7 @@
  *
  *  Created on: Aug 1, 2013
  *  Elliot Weil
- *  Contains mergesort, insertion sort, binary Search, and a string compare for strings of version numbers
+ *  Contains mergesort, insertion sort, binary Search, and a string compare for strings of version numbers, Longest Palindrom problem
  */
 
 #include <iostream>
@@ -11,6 +11,8 @@
 #include <vector>
 #include <math.h>
 using namespace std;
+
+string LongestPalindrome(string s1);
 
 void findTuples(vector<int> array);
 
@@ -62,6 +64,14 @@ int main()
     for(int i = 0; i < quickSorted.size(); i++)
         	cout<< sortedA[i] << ", ";
     cout<<endl;
+
+	string s1 = "ababba";
+	string s2 = "racecar";
+	string s3 = "abcvdfgew";
+	s1 =  LongestPalindrome(s1);
+	s2 = LongestPalindrome(s2);
+	s3 = LongestPalindrome(s3);
+	cout <<s1<<" "<<s2<<" "<<s3<<endl;
 	return 0;
 }
 //Function takes to strings s1, and s2 both strings contain version numbers ex(10.2, 1.92, 2.0)
@@ -281,4 +291,41 @@ vector<int> quickSort(vector<int> array){
 	lesserThenPivot.push_back(pivot[0]);
 	lesserThenPivot.insert(lesserThenPivot.end(), greaterThenPivot.begin(), greaterThenPivot.end());
 	return lesserThenPivot;
+}
+//Solution for returning the longest palindrome in a string. Worst case:O(n^2) Best Case:O(n)
+string LongestPalindrome(string s1){
+int lower;
+int upper;
+int LongestStart = 0;
+int LongestEnd = 0;
+for(int i =0; i< s1.length(); i++){
+	//for odd palimdromes
+	lower = i;
+	upper = i;
+	while(s1[upper] == s1[lower] && lower >= 0 && upper <= s1.length()){
+ 		if((upper - lower) >= (LongestEnd - LongestStart)){
+			LongestEnd = upper;
+			LongestStart = lower;
+ 		}
+ 		upper++;
+ 		lower--;
+	}
+
+	//for even palindromes
+	lower = i;
+	upper = i+1;
+	while(s1[upper] == s1[lower] && lower >= 0 && upper <= s1.length()){
+ 		if((upper - lower) >= (LongestEnd - LongestStart)){
+			LongestEnd = upper;
+			LongestStart = lower;
+ 		}
+ 		upper++;
+ 		lower--;
+	}
+}
+string LPalin = "";
+for(int i = LongestStart; i <= LongestEnd; i++){
+	LPalin += s1[i];
+}
+return LPalin;
 }
