@@ -67,7 +67,7 @@ int main()
 
 	string s1 = "ababba";
 	string s2 = "racecar";
-	string s3 = "abcvdfgew";
+	string s3 = "w";
 	s1 =  LongestPalindrome(s1);
 	s2 = LongestPalindrome(s2);
 	s3 = LongestPalindrome(s3);
@@ -302,7 +302,9 @@ for(int i =0; i< s1.length(); i++){
 	//for odd palimdromes
 	lower = i;
 	upper = i;
-	while(s1[upper] == s1[lower] && lower >= 0 && upper <= s1.length()){
+	while(lower >= 0 && upper < s1.length()) {
+        if(s1[lower] != s1[upper])
+            break;
  		if((upper - lower) >= (LongestEnd - LongestStart)){
 			LongestEnd = upper;
 			LongestStart = lower;
@@ -314,7 +316,9 @@ for(int i =0; i< s1.length(); i++){
 	//for even palindromes
 	lower = i;
 	upper = i+1;
-	while(s1[upper] == s1[lower] && lower >= 0 && upper <= s1.length()){
+	while(lower >= 0 && upper < s1.length()){
+        if(s1[lower] != s1[upper])
+                break;
  		if((upper - lower) >= (LongestEnd - LongestStart)){
 			LongestEnd = upper;
 			LongestStart = lower;
