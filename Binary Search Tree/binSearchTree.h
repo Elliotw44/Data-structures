@@ -88,6 +88,8 @@ void BFSPrint(ostream& out) const;
 
 void remove(const int anItem);
 
+int LCA(int NodeAValue, int NodeBValue);
+
 protected:
 
 struct Node {
@@ -158,6 +160,10 @@ void adopt2(Node* subtreeRoot);
 int getHeight(const Node* subnode) const;
 
 bool FormedTraverse(const Node* subtreeRoot, bool Formed) const;
+
+Node* LCAHelp(int NodeA, int NodeB, Node* subRoot);
+
+bool covers(int PchildValue, Node* startNode);
 
 Node* inOrderSuc(Node* subtreeRoot);
 };

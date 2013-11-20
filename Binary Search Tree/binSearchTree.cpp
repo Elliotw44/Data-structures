@@ -177,8 +177,8 @@ bool BinSearchTree::lookupTraverse(const Node* subtreeRoot,const int anItem, boo
   }
  else
  	return Found;
+
 }
-	
 
 void BinSearchTree::insertTraverse(Node*& subtreeRoot, const int anItem)
 {
@@ -224,8 +224,10 @@ bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool Formed) const
 		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) > 1) ||
 		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < 0) ||
 		 !FormedTraverse(subtreeRoot->leftChild, Formed) ||
-		 !FormedTraverse(subtreeRoot->rightChild, Formed))
-	return false;
+		 !FormedTraverse(subtreeRoot->rightChild, Formed)){
+
+			return false;
+		 }
 
 }
 bool BinSearchTree::WellFormed()
@@ -381,6 +383,36 @@ BinSearchTree::Node* BinSearchTree ::inOrderSuc(Node* subtreeRoot)
   return finder;
 }
 
+int BinSearchTree::LCA(int NodeA, int NodeB)
+{
+	Node* LCA = LCAHelp(NodeA, NodeB, root);
+	if(LCA != NULL)
+		return LCA->item;
+    else
+		return -1;
+}
 
-				
-				 
+BinSearchTree::Node*  BinSearchTree::LCAHelp(int NodeAValue, int NodeBValue, Node* subRoot)
+{
+	if(subRoot == NULL)
+		return NULL;
+	bool AOnRight = covers(NodeAValue,subRoot->rightChild);
+	bool BOnRight = covers(NodeBValue,subRoot->rightChild);
+	if(AOnRight !=  BOnRight)
+		return subRoot;
+	else if(AOnRight && BOnRight)
+		return(LCAHelp(NodeAValue,NodeBValue,subRoot->rightChild));
+	else
+		return(LCAHelp(NodeAValue,NodeBValue,subRoot->leftChild));
+
+
+}
+bool BinSearchTree::covers(int PchildValue, Node* startNode)
+{
+	if(startNode == NULL)
+		return false;
+	else if(startNode->item == PchildValue)
+		return true;
+
+	return(covers(PchildValue,startNode->leftChild)||covers(PchildValue,startNode->rightChild));
+}

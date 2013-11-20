@@ -20,6 +20,7 @@ int main()
   tree.insert(1);
   tree.insert(12);
   tree.insert(13);
+  cout<<"LCA of 12 15: " << tree.LCA(15,12) << endl;
   cout << "printing the whole tree below" << endl;
   tree.BFSPrint(cout);
   treeFormed = tree.WellFormed();
