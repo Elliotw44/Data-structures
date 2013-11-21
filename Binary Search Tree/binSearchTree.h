@@ -149,7 +149,7 @@ void insertTraverse(Node*& subtreeRoot, const int anItem);
 *@ param Found
 *@ param Key
 */
-bool lookupTraverse(const Node* subtreeRoot,int anItem, bool& Found);
+bool lookupTraverse(const Node* subtreeRoot,int anItem);
 
 void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
 
@@ -159,7 +159,7 @@ void adopt2(Node* subtreeRoot);
 
 int getHeight(const Node* subnode) const;
 
-bool FormedTraverse(const Node* subtreeRoot, bool Formed) const;
+bool FormedTraverse(const Node* subtreeRoot) const;
 
 Node* LCAHelp(int NodeA, int NodeB, Node* subRoot);
 

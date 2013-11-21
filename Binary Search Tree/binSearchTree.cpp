@@ -58,8 +58,7 @@ void BinSearchTree::insert(const int anItem)
 }
 bool BinSearchTree::lookup(const int anItem)
 {
-	bool found = false;
-	lookupTraverse(root, anItem, found);
+	bool found = lookupTraverse(root, anItem);
 	return found;
 }
 void BinSearchTree::preOrderPrint(ostream& out) const
@@ -164,20 +163,14 @@ void BinSearchTree::copyTraverse(const Node* subtreeRoot, Node*& newRoot)
    } 
 }
 
-bool BinSearchTree::lookupTraverse(const Node* subtreeRoot,const int anItem, bool& Found)
+bool BinSearchTree::lookupTraverse(const Node* subtreeRoot,const int anItem)
 {
- if(Found != true && subtreeRoot != NULL)
- { 
-   if(anItem == subtreeRoot->item)
-  	 Found = true;
-  else if (anItem < subtreeRoot->item)
-   lookupTraverse(subtreeRoot->leftChild, anItem, Found); 
+  if(subtreeRoot == NULL)
+  	return false;
+  else if(anItem == subtreeRoot->item)
+  	return true;
   else
-   lookupTraverse(subtreeRoot->rightChild, anItem, Found);
-  }
- else
- 	return Found;
-
+   return(lookupTraverse(subtreeRoot->rightChild, anItem)||lookupTraverse(subtreeRoot->leftChild, anItem));
 }
 
 void BinSearchTree::insertTraverse(Node*& subtreeRoot, const int anItem)
@@ -207,33 +200,29 @@ int BinSearchTree::getHeight(const Node* subnode) const
 {
 
 	if(subnode == NULL)
-		return 0;
-	int heightR = getHeight(subnode->rightChild) + 1;
-	int heightL = getHeight(subnode->leftChild) + 1;
+		return -1;
+	int heightR = getHeight(subnode->rightChild);
+	int heightL = getHeight(subnode->leftChild);
 	if(heightR > heightL)
-		return heightR;
+		return heightR + 1;
 	else
-		return heightL;
+		return heightL + 1;
 }
 
-bool BinSearchTree::FormedTraverse(const Node* subtreeRoot, bool Formed) const
+bool BinSearchTree::FormedTraverse(const Node* subtreeRoot) const
 {
  if(subtreeRoot == NULL) 
 	 return true;
- else if(
-		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) > 1) ||
-		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < 0) ||
-		 !FormedTraverse(subtreeRoot->leftChild, Formed) ||
-		 !FormedTraverse(subtreeRoot->rightChild, Formed)){
-
+ else if(((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) > 1) ||
+		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < -1)) 
+		 {
 			return false;
 		 }
-
+ return(FormedTraverse(subtreeRoot->rightChild) || FormedTraverse(subtreeRoot->leftChild));
 }
 bool BinSearchTree::WellFormed()
 {
-	bool Formed = true;
-	Formed = FormedTraverse(root, Formed);
+	bool Formed = FormedTraverse(root);
 	return Formed;
 }
 

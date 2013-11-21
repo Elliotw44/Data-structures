@@ -20,12 +20,9 @@ int main()
   tree.insert(1);
   tree.insert(12);
   tree.insert(13);
-  cout<<"LCA of 12 15: " << tree.LCA(15,12) << endl;
+  cout<<"LCA of 13 7: " << tree.LCA(13,7) << endl;
   cout << "printing the whole tree below" << endl;
   tree.BFSPrint(cout);
-  treeFormed = tree.WellFormed();
-  cout<<"is the tree well formed? : "<<treeFormed<<endl;
-  tree.removeItem(7);
   treeFormed = tree.WellFormed();
   cout<<"is the tree well formed? : "<<treeFormed<<endl;
   cout<< "testing remove cases below" << endl;
@@ -44,6 +41,8 @@ int main()
   tree.removeItem(8);
   tree.removeItem(5);
   cout << endl << "8 then 5 have been removed from the tree" <<endl << endl;
+  treeFormed = tree.WellFormed();
+  cout<<"is the tree well formed? : "<<treeFormed<<endl;
   tree.BFSPrint(cout);
   tree.removeItem(12);
   tree.removeItem(20);
