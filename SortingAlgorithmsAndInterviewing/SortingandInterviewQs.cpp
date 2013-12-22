@@ -29,6 +29,9 @@ bool binarySearch(vector<int> array, int item);
 vector<int> selectSort(vector<int> array);
 
 vector<int> quickSort(vector<int> array);
+
+int ArthMissingValue(vector<int> array);
+
 int main()
 {
     string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
@@ -328,4 +331,28 @@ for(int i = LongestStart; i <= LongestEnd; i++){
 	LPalin += s1[i];
 }
 return LPalin;
+}
+
+int ArthMissingValue(vector<int> array){
+    int length = array.size();
+    //check to make sure the first difference isn't missing the value
+    int Sdiff = array[1] - array[0];
+    int Ediff = array[length-1] - array[length-2];
+    int Cdiff;
+    if(Sdiff == Ediff)
+        Cdiff = Sdiff;
+    else{
+        if(Sdiff < 0)
+            Sdiff = Sdiff * -1;
+        if(Ediff < 0)
+            Ediff = Ediff * -1;
+        Cdiff = Sdiff < Ediff ? Sdiff : Ediff;
+    }
+    for(int i = 0; i < length - 1; i++){
+        int diff = series[i+1] - series[i];
+        if(diff != Cdiff){
+            return series[i] + Cdiff;
+        }
+    }
+    
 }
