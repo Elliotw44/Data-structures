@@ -213,12 +213,13 @@ bool BinSearchTree::FormedTraverse(const Node* subtreeRoot) const
 {
  if(subtreeRoot == NULL) 
 	 return true;
+	 
  else if(((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) > 1) ||
-		 ((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < -1)) 
-		 {
-			return false;
-		 }
- return(FormedTraverse(subtreeRoot->rightChild) || FormedTraverse(subtreeRoot->leftChild));
+	((getHeight(subtreeRoot->leftChild) - getHeight(subtreeRoot->rightChild)) < -1)) 
+	{
+		return false;
+	}
+ return(FormedTraverse(subtreeRoot->rightChild) && FormedTraverse(subtreeRoot->leftChild));
 }
 bool BinSearchTree::WellFormed()
 {
