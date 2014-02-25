@@ -31,7 +31,7 @@ List::List(const List* list)
     }
 }
 //Reverses every N items in a linked listed
-//I use two stacks to keep track of the temporary Heads and Tails of the sub lists
+//I use two queues to keep track of the temporary Heads and Tails of the sub lists
 //Each sub list is then reversed independantly and then re attached together
 //O(n)
 void List::ReverseBySection(int n){
