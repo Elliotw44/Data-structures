@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <queue>
 using namespace std;
 
 #include "list2.h"
@@ -29,7 +30,75 @@ List::List(const List* list)
      newPtr->next = NULL;
     }
 }
+//Reverses every N items in a linked listed
+//I use two stacks to keep track of the temporary Heads and Tails of the sub lists
+//Each sub list is then reversed independantly and then re attached together
+//O(n)
+void List::ReverseBySection(int n){
+        if (n >= size) {
+            this->Reverse();
+            return;
+        }
+        if (n == 1) {
+            return;
+        }
+        queue<node*> SubHeads;
+        queue<node*> SubTails;
+        node* runner = head;
+        SubHeads.push(runner);
+        runner = runner->next;
+        int numGroups = size / n;
+        int groups = 0;
+        int i = 2;
+        while(groups < numGroups) {
+            if(i % n == 0){
+                node* tmp = runner->next;
+                
+                SubHeads.push(tmp);
+                runner->next = NULL;
+                runner=tmp;
+                groups++;
+                i++;
+                continue;
+                
+            }
+            runner = runner->next;
+            i++;
+        }
+        for (int i =0; i < SubHeads.size() - 1; i++) {
+            node* tmpHead = SubHeads.front();
+            node* middlePtr = tmpHead -> next;
+            node* forwardPtr = middlePtr -> next;
+            tmpHead->next = NULL;
+            node* tmp = tmpHead;
+            SubTails.push(tmp);
+            while(forwardPtr != NULL) {
+                forwardPtr = middlePtr -> next;
+                middlePtr -> next = tmpHead;
+                tmpHead = middlePtr;
+                middlePtr = forwardPtr;
+                forwardPtr = forwardPtr->next;
+            }
+            middlePtr->next = tmpHead;
+            tmpHead = middlePtr;
+            SubHeads.push(tmpHead);
+            SubHeads.pop();
+        }
+        SubHeads.pop();
+        head = SubHeads.front();
+        SubHeads.pop();
+        while (SubTails.size() > 1) {
+            node* tmp = SubTails.front();
+            tmp->next = SubHeads.front();
+            SubTails.pop();
+            SubHeads.pop();
+        }
+        node* tmp = SubTails.front();
+        tmp->next = runner;
+        SubTails.pop();
+}
 
+//standard LL reverse
 void List::Reverse()
 {
 	node* middlePtr;
@@ -40,6 +109,7 @@ void List::Reverse()
 	else
 		{
 		  middlePtr = head -> next;
+          forwardPtr = middlePtr -> next;
 		  head -> next = NULL;
 		  while(forwardPtr != NULL)
 		   {
@@ -48,7 +118,7 @@ void List::Reverse()
 		     head = middlePtr;
 		     middlePtr = forwardPtr;
 		     forwardPtr = forwardPtr->next;
-		   }
+         }
 		middlePtr->next = head;
 		head = middlePtr;
 		return;
