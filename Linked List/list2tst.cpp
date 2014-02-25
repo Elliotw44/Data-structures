@@ -29,10 +29,10 @@ int main()
     lst->display();
     List lst4 = List(lst);
     List lst5 = List(lst);
-    cout<<"testing sections reverse"<<endl;
+    cout<<"testing sections size of 4 reverse"<<endl;
     lst->ReverseBySection(4);
     lst->display();
-    cout<<"testing sections reverse No extra data structures"<<endl;
+    cout<<"testing sections size of 3 reverse with no extra data structures"<<endl;
     lst5.ReverseBySectionNoExtraDS(3);
     lst5.display();
     lst4.Reverse();
