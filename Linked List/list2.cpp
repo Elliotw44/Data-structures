@@ -33,7 +33,7 @@ List::List(const List* list)
 //Reverses every N items in a linked listed
 //I use two queues to keep track of the temporary Heads and Tails of the sub lists
 //Each sub list is then reversed independantly and then re attached together
-//O(n)
+//Time: O(n)
 void List::ReverseBySection(int n){
         if (n >= size) {
             this->Reverse();
@@ -42,18 +42,19 @@ void List::ReverseBySection(int n){
         if (n == 1) {
             return;
         }
-        queue<node*> SubHeads;
-        queue<node*> SubTails;
+        queue<node*> SubHeads; //queue to keep track of sub heads
+        queue<node*> SubTails; //queue to keep track of sub tails
         node* runner = head;
         SubHeads.push(runner);
         runner = runner->next;
         int numGroups = size / n;
         int groups = 0;
         int i = 2;
+        // go through the LL and push all subheads onto the queue and break apart the LL.
+        // also note that the runner is also pointing to the start of any "extra" items
         while(groups < numGroups) {
             if(i % n == 0){
                 node* tmp = runner->next;
-                
                 SubHeads.push(tmp);
                 runner->next = NULL;
                 runner=tmp;
@@ -65,6 +66,8 @@ void List::ReverseBySection(int n){
             runner = runner->next;
             i++;
         }
+        //Go through the subHeads queue and remove each head one at a time and reverse that subsection.
+        //After its reverse push the new head onto the back of the queue
         for (int i =0; i < SubHeads.size() - 1; i++) {
             node* tmpHead = SubHeads.front();
             node* middlePtr = tmpHead -> next;
@@ -72,6 +75,7 @@ void List::ReverseBySection(int n){
             tmpHead->next = NULL;
             node* tmp = tmpHead;
             SubTails.push(tmp);
+            //standard LL reverse code
             while(forwardPtr != NULL) {
                 forwardPtr = middlePtr -> next;
                 middlePtr -> next = tmpHead;
@@ -84,6 +88,7 @@ void List::ReverseBySection(int n){
             SubHeads.push(tmpHead);
             SubHeads.pop();
         }
+        //with everything reversed now we just have to reattach the sub LLs to reform the bigger LL
         SubHeads.pop();
         head = SubHeads.front();
         SubHeads.pop();
@@ -96,6 +101,58 @@ void List::ReverseBySection(int n){
         node* tmp = SubTails.front();
         tmp->next = runner;
         SubTails.pop();
+}
+
+//Reverses every N items in a linked listed
+//This methond doesn't use any extra additional data-structures
+//this moves through the LL and reverse each sub section while keeping track of the previous tail
+//Time: O(n)
+void List::ReverseBySectionNoExtraDS(int n){
+    if (n >= size) {
+        this->Reverse();
+        return;
+    }
+    if (n == 1) {
+        return;
+    }
+    node* prevTail;
+    node* curTail;
+    node* prev;
+    node* curr;
+    node* front;
+    int numGroups = size / n;
+    int curGroup = 0;
+    curTail = head;
+    prev = head;
+    curr = prev->next;
+    //while group one pass through for each group
+    while (curGroup < numGroups) {
+        curr = prev->next;
+        for (int i= 1; i < n; i++) {
+            front = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = front;
+        }
+        //if this is the first pass through set the head to new start of the list
+        if(curGroup == 0)
+        head = prev;
+        else
+        prevTail->next = prev; //else just set the prevTail->next to prev
+        //move up the tail
+        prevTail = curTail;
+        //setup for next section
+        prev = curr;
+        //ending conidtion to see if I need to change the tail
+        if((size % n == 0) && (curGroup == numGroups-1)) //I am the last group and there is no "extra" items so null out
+        curTail->next = NULL;
+        else if(curGroup == numGroups-1) // I am the last group and there are extra items so point my tail at them
+        curTail->next = front;
+        else
+        curTail = prev;
+        curGroup++;
+    }
+    
 }
 
 //standard LL reverse

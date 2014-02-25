@@ -25,11 +25,16 @@ int main()
     lst->insert(5,5);
     lst->insert(6,6);
     lst->insert(7,7);
+    lst->insert(8,8);
     lst->display();
     List lst4 = List(lst);
+    List lst5 = List(lst);
     cout<<"testing sections reverse"<<endl;
     lst->ReverseBySection(4);
     lst->display();
+    cout<<"testing sections reverse No extra data structures"<<endl;
+    lst5.ReverseBySectionNoExtraDS(3);
+    lst5.display();
     lst4.Reverse();
     cout << "after Reverse"<< endl;
     lst4.display();

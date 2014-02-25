@@ -15,6 +15,8 @@ class List
    void RecursiveRev(node* head, node* cur);
     
    void ReverseBySection(int n);
+    
+   void ReverseBySectionNoExtraDS(int n);
    
    bool isEmpty() const;
    int getLength() const;
