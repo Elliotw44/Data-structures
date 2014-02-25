@@ -84,21 +84,19 @@ vector<int> MergeSort(vector<int> unsorted){
 bool binarySearch(vector<int> array, int item){
 	int middle;
 	int searchStart = 0;
-	int searchEnd = array.size() - 1;
-	if(item < array[searchStart] || item > array[searchEnd]){
-		return false;
-	}
-	middle = (searchStart + searchEnd) / 2;
-	while(searchStart != middle && searchEnd != middle){
-		if(item == array[middle] || item == array[middle+1])
+	int searchEnd = array.size()-1;
+
+	while(searchStart <= searchEnd){
+    if(item == array[middle])
         return true;
 		else if(item > array[middle])
-        searchStart = middle;
+        searchStart = middle + 1;
 		else
-        searchEnd = middle;
-		middle = (searchStart + searchEnd) / 2;
-	}
-	return false;
+        searchEnd = middle - 1;
+
+	   middle = (searchStart + searchEnd) / 2;
+   }
+  return false;
 }
 
 //selection sort implmented for vectors(dynamic arrays)

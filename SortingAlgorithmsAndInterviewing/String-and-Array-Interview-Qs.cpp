@@ -25,10 +25,9 @@ char findUnq(string input);
 int main()
 {
     int uns2[] = {5,8,7,2,10,1,3,4,6,9};
-    vector<int> unsort (uns2, uns2 + sizeof(uns2) / sizeof(int));
-    
+    vector<int> unsort (uns2, uns2 + sizeof(uns2) / sizeof(int)); 
     int testArr[] = {5,10,-8,-8,4,11};
-	vector<int> testV (testArr, testArr + sizeof(testArr) / sizeof(int));
+	  vector<int> testV (testArr, testArr + sizeof(testArr) / sizeof(int));
     
     cout <<"Longest sum array: 5 10 -8 -8 4 11"<<endl;
     LongestSum(testV);
@@ -37,14 +36,17 @@ int main()
     cout<<endl<<endl<<"The Tuples for the list above are below."<<endl;
     findTuples(unsort);
     cout<<endl;
-    
-	string s1 = "ababba";
-	string s2 = "racecar";
-	string s3 = "abcvdfgew";
-	s1 =  LongestPalindrome(s1);
-	s2 = LongestPalindrome(s2);
-	s3 = LongestPalindrome(s3);
-	cout <<s1<<" "<<s2<<" "<<s3<<endl;
+
+    vector<int> sorted = MergeSort(unsort);
+    cout<<"binary Search returned: "<<binarySearch(sorted, 1)<<endl;
+
+	  string s1 = "ababba";
+	  string s2 = "racecar";
+	  string s3 = "abcvdfgew";
+	  s1 =  LongestPalindrome(s1);
+	  s2 = LongestPalindrome(s2);
+	  s3 = LongestPalindrome(s3);
+	  cout <<s1<<" "<<s2<<" "<<s3<<endl;
     assert(s1 == "abba");
     assert(s2 == "racecar");
     assert(s3 == "w");
@@ -72,10 +74,10 @@ int main()
     string test6 ="asdlkjesl;dj;sk;ldjelalj-7834-asdsf32wqwe--324-ewqeq";
     //test overload prevention
     string test7 = "12345678901234567890213456785432456786543";
-	//testing overload prevention for negative numbers
-	string test8 = "-12345678901234567890123";
-	//testing for floats
-	string test9 = "21343.324";
+	  //testing overload prevention for negative numbers
+	  string test8 = "-12345678901234567890123";
+	  //testing for floats
+	  string test9 = "21343.324";
     long itest = StringToLong(test);
     long itest1 = StringToLong(test1);
     long itest2 = StringToLong(test2);
@@ -84,18 +86,18 @@ int main()
     long itest5 = StringToLong(test5);
     long itest6 = StringToLong(test6);
     long itest7 = StringToLong(test7);
-	long itest8 = StringToLong(test8);
-	long itest9 = StringToLong(test9);
-	assert(itest == 39156742790);
-	assert(itest1 == 9381434);
-	assert(itest2 == 530012086);
-	assert(itest3 == -23424562);
-	assert(itest4 == 3243234234);
-	assert(itest5 == -34243344);
-	assert(itest6 == -783432324);
-	assert(itest7 == 1234567890123456789);
-	assert(itest8 == -1234567890123456789);
-	assert(itest9 == 21343324);
+	  long itest8 = StringToLong(test8);
+	  long itest9 = StringToLong(test9);
+	  assert(itest == 39156742790);
+	  assert(itest1 == 9381434);
+	  assert(itest2 == 530012086);
+	  assert(itest3 == -23424562);
+	  assert(itest4 == 3243234234);
+	  assert(itest5 == -34243344);
+	  assert(itest6 == -783432324);
+	  assert(itest7 == 1234567890123456789);
+	  assert(itest8 == -1234567890123456789);
+	  assert(itest9 == 21343324);
     
     cout<<"all asserts passed!"<<endl;
 	return 0;
