@@ -38,7 +38,7 @@ int main()
     cout<<endl;
     //test Binary Search
     vector<int> sorted = MergeSort(unsort);
-    cout<<"binary Search returned: "<<binarySearch(sorted, 1)<<endl;
+    cout<<"binary Search returned: "<<binarySearch(sorted, 5)<<endl;
 
     //test string reverse
     assert(reverse("abc") == "cba");

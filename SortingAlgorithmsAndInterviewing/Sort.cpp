@@ -85,16 +85,14 @@ bool binarySearch(vector<int> array, int item){
 	int middle;
 	int searchStart = 0;
 	int searchEnd = array.size()-1;
-
 	while(searchStart <= searchEnd){
+    middle = (searchStart + searchEnd) / 2;
     if(item == array[middle])
         return true;
 		else if(item > array[middle])
         searchStart = middle + 1;
 		else
         searchEnd = middle - 1;
-
-	   middle = (searchStart + searchEnd) / 2;
    }
   return false;
 }
