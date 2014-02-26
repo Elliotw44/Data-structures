@@ -18,7 +18,7 @@ string LongestPalindrome(string s1);
 void findTuples(vector<int> array);
 void LongestSum(vector<int> theArray);
 long StringToLong(string s);
-char findUnq(string input);
+char findUnique(string input);
 string reverse(string theString);
 
 
@@ -60,10 +60,10 @@ int main()
     assert(s3 == "w");
 
     //test find unique
-    assert(findUnq("SBSBEfefe") == 'E');
-    assert(findUnq("SSSBBSAaaAERER") == '#');
-    assert(findUnq("a") == 'a');
-    assert(findUnq("12332aabbcc14") == '4');
+    assert(findUnique("SBSBEfefe") == 'E');
+    assert(findUnique("SSSBBSAaaAERER") == '#');
+    assert(findUnique("a") == 'a');
+    assert(findUnique("12332aabbcc14") == '4');
     
     //Test stringToLong
     //normal case
@@ -271,7 +271,7 @@ string LongestPalindrome(string s1){
     return LPalin;
 }
 //finds the first unique char in a string then returns it. If not unique char exist returns '#'
-char findUnq(string input){
+char findUnique(string input){
     unordered_map<char, int> CharCount;
     for(int i = 0; i < input.length(); i++){
         if(CharCount.count(input[i]) >= 1){
