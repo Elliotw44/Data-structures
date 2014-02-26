@@ -41,7 +41,9 @@ int main()
     cout<<"binary Search returned: "<<binarySearch(sorted, 1)<<endl;
 
 
-    cout<<
+    cout<<reverse("abc")<<endl;
+    cout<<reverse("hola")<<endl;
+
 	  string s1 = "ababba";
 	  string s2 = "racecar";
 	  string s3 = "abcvdfgew";
@@ -108,11 +110,11 @@ int main()
 //Code to reverse a string in place pretty simple
 //Time: O(n)
 string reverse(string theString){
-	int length = theString.length();
+	int length = theString.length() - 1;
 	char temp;
   int i = 0;
   while(i < (length - i)){
-      temp = theString[j];
+      temp = theString[length-i];
       theString[length-i] = theString[i];
       theString[i] = temp;
       i++;
