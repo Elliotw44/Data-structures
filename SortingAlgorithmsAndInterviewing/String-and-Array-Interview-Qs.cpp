@@ -19,7 +19,7 @@ void findTuples(vector<int> array);
 void LongestSum(vector<int> theArray);
 long StringToLong(string s);
 char findUnq(string input);
-
+string reverse(string theString);
 
 
 int main()
