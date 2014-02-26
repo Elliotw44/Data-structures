@@ -102,10 +102,32 @@ int main()
     cout<<"all asserts passed!"<<endl;
 	return 0;
 }
+
+//Code to reverse a string in place pretty simple
+//Time: O(n)
+string reverse(string theString){
+	int length = theString.length();
+	char temp;
+	int j = length - 1;
+    int half;
+	
+	if(length % 2 == 0)
+    half = length/2);
+    else
+    half = (length-1)/2;
+    
+    for(int i = 0; i < half; i++){
+        temp = theString[j];
+        theString[j] = theString[i];
+        theString[i] = temp;
+        j--;
+    }
+    
+	return theString;
+}
 //Take  a string full of numbers and make it a  long
 //O(n) Time
-long StringToLong(string s)
-{
+long StringToLong(string s){
 	//bool for checking if you have found the first number in the string
 	bool first = false;
 	//bool that gets set if the long is negative
