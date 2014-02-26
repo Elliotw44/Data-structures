@@ -40,6 +40,8 @@ int main()
     vector<int> sorted = MergeSort(unsort);
     cout<<"binary Search returned: "<<binarySearch(sorted, 1)<<endl;
 
+
+    cout<<
 	  string s1 = "ababba";
 	  string s2 = "racecar";
 	  string s3 = "abcvdfgew";
@@ -108,20 +110,13 @@ int main()
 string reverse(string theString){
 	int length = theString.length();
 	char temp;
-	int j = length - 1;
-    int half;
-	
-	if(length % 2 == 0)
-    half = length/2);
-    else
-    half = (length-1)/2;
-    
-    for(int i = 0; i < half; i++){
-        temp = theString[j];
-        theString[j] = theString[i];
-        theString[i] = temp;
-        j--;
-    }
+  int i = 0;
+  while(i < (length - i)){
+      temp = theString[j];
+      theString[length-i] = theString[i];
+      theString[i] = temp;
+      i++;
+  }
     
 	return theString;
 }
