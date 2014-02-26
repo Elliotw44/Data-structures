@@ -36,14 +36,18 @@ int main()
     cout<<endl<<endl<<"The Tuples for the list above are below."<<endl;
     findTuples(unsort);
     cout<<endl;
-
+    //test Binary Search
     vector<int> sorted = MergeSort(unsort);
     cout<<"binary Search returned: "<<binarySearch(sorted, 1)<<endl;
 
+    //test string reverse
+    assert(reverse("abc") == "cba");
+    assert(reverse("hola") == "aloh");
+    assert(reverse("12") == "21");
+    assert(reverse("1") == "1");
+    assert(reverse("asdfghjk") == "kjhgfdsa");
 
-    cout<<reverse("abc")<<endl;
-    cout<<reverse("hola")<<endl;
-
+    //test longest Palindrome
 	  string s1 = "ababba";
 	  string s2 = "racecar";
 	  string s3 = "abcvdfgew";
@@ -55,13 +59,13 @@ int main()
     assert(s2 == "racecar");
     assert(s3 == "w");
 
-    
+    //test find unique
     assert(findUnq("SBSBEfefe") == 'E');
     assert(findUnq("SSSBBSAaaAERER") == '#');
     assert(findUnq("a") == 'a');
     assert(findUnq("12332aabbcc14") == '4');
     
-    
+    //Test stringToLong
     //normal case
     string test = "39156742790";
     //letters inbetween
