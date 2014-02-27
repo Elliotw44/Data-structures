@@ -24,8 +24,9 @@ void perfectStringShuffle(string& s1);
 
 int main()
 {
-    //Question is to sort a list of version numbers.
-    string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
+  srand (time(NULL));
+  //Question is to sort a list of version numbers.
+  string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
 	list<string> unsortedVs(uns, uns + 8);
 	cout<<"The original unsorted list of version numbers is below" << endl;
 	for(list<string>::iterator it = unsortedVs.begin(); it != unsortedVs.end(); it++)
@@ -50,7 +51,7 @@ int main()
 
   string maS = "randomThis";
   perfectStringShuffle(maS);
-  cout << maS << endl;
+  cout <<"The randomly shuffled verions of randomThis is: "<<  maS << endl;
     
     
   	return 0;
@@ -58,7 +59,6 @@ int main()
 
 void perfectStringShuffle(string& s1) {
   int index = s1.length() - 1;
-  srand (time(NULL));
   for(int i =0; i < s1.length(); i++){
        int randomPos = rand() % index-i + i;
        char temp = s1[i];
