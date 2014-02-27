@@ -9,6 +9,8 @@
 #include <list>
 #include <vector>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 
 
@@ -17,6 +19,8 @@ bool VersNumComp(string s1, string s2);
 void FourColoredBallsGame(string guess, string answer);
 
 list<string> sortVersionNums(list<string> unsorted);
+
+void perfectStringShuffle(string& s1);
 
 int main()
 {
@@ -42,10 +46,28 @@ int main()
 	FourColoredBallsGame("BYRG", "GRBY");
 	//2 color and 2 location
 	FourColoredBallsGame("BGRY", "YGRB");
+
+
+  string maS = "randomThis";
+  perfectStringShuffle(maS);
+  cout << maS << endl;
     
     
   	return 0;
 }
+
+void perfectStringShuffle(string& s1) {
+  int index = s1.length() - 1;
+  srand (time(NULL));
+  for(int i =0; i < s1.length(); i++){
+       int randomPos = rand() % index-i + i;
+       char temp = s1[i];
+       s1[i] = s1[randomPos];
+       s1[randomPos] = temp;
+  }
+}
+
+
 //Function takes to strings s1, and s2 both strings contain version numbers ex(10.2, 1.92, 2.0)
 //Returns true if s1 is higher version number then s2.
 bool VersNumComp(string s1, string s2){
