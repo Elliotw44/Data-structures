@@ -28,8 +28,8 @@ int main()
     int uns2[] = {5,8,7,2,10,1,3,4,6,9};
     vector<int> unsort (uns2, uns2 + sizeof(uns2) / sizeof(int)); 
     int testArr[] = {5,10,-8,-8,4,11};
-	  vector<int> testV (testArr, testArr + sizeof(testArr) / sizeof(int));
-    
+    vector<int> testV (testArr, testArr + sizeof(testArr) / sizeof(int));
+        
     cout <<"Longest sum array: 5 10 -8 -8 4 11"<<endl;
     LongestSum(testV);
 
@@ -41,6 +41,15 @@ int main()
     vector<int> sorted = MergeSort(unsort);
     cout<<"binary Search returned: "<<binarySearch(sorted, 5)<<endl;
 
+    //test find largest sub product
+    int grpSize = 3;
+    vector<int> subProd = LargestSubProduct(testV, grpSize);
+    cout<<"The largest product of group size: "<< grpSize<<endl;
+    for(int i =0; i < subProd.size(); i++)
+        cout<<subProd[i]<<", ";
+    cout<<endl;
+    
+
     //test string reverse
     assert(reverse("abc") == "cba");
     assert(reverse("hola") == "aloh");
@@ -49,13 +58,13 @@ int main()
     assert(reverse("asdfghjk") == "kjhgfdsa");
 
     //test longest Palindrome
-	  string s1 = "ababba";
-	  string s2 = "racecar";
-	  string s3 = "abcvdfgew";
-	  s1 =  LongestPalindrome(s1);
-	  s2 = LongestPalindrome(s2);
-	  s3 = LongestPalindrome(s3);
-	  cout <<s1<<" "<<s2<<" "<<s3<<endl;
+    string s1 = "ababba";
+    string s2 = "racecar";
+    string s3 = "abcvdfgew";
+    s1 =  LongestPalindrome(s1);
+    s2 = LongestPalindrome(s2);
+    s3 = LongestPalindrome(s3);
+    cout <<s1<<" "<<s2<<" "<<s3<<endl;
     assert(s1 == "abba");
     assert(s2 == "racecar");
     assert(s3 == "w");
@@ -65,7 +74,7 @@ int main()
     assert(findUnique("SSSBBSAaaAERER") == '#');
     assert(findUnique("a") == 'a');
     assert(findUnique("12332aabbcc14") == '4');
-    
+        
     //Test stringToLong
     //normal case
     string test = "39156742790";
@@ -83,10 +92,10 @@ int main()
     string test6 ="asdlkjesl;dj;sk;ldjelalj-7834-asdsf32wqwe--324-ewqeq";
     //test overload prevention
     string test7 = "12345678901234567890213456785432456786543";
-	  //testing overload prevention for negative numbers
-	  string test8 = "-12345678901234567890123";
-	  //testing for floats
-	  string test9 = "21343.324";
+    //testing overload prevention for negative numbers
+    string test8 = "-12345678901234567890123";
+    //testing for floats
+    string test9 = "21343.324";
     long itest = StringToLong(test);
     long itest1 = StringToLong(test1);
     long itest2 = StringToLong(test2);
@@ -95,21 +104,21 @@ int main()
     long itest5 = StringToLong(test5);
     long itest6 = StringToLong(test6);
     long itest7 = StringToLong(test7);
-	  long itest8 = StringToLong(test8);
-	  long itest9 = StringToLong(test9);
-	  assert(itest == 39156742790);
-	  assert(itest1 == 9381434);
-	  assert(itest2 == 530012086);
-	  assert(itest3 == -23424562);
-	  assert(itest4 == 3243234234);
-	  assert(itest5 == -34243344);
-	  assert(itest6 == -783432324);
-	  assert(itest7 == 1234567890123456789);
-	  assert(itest8 == -1234567890123456789);
-	  assert(itest9 == 21343324);
-    
+    long itest8 = StringToLong(test8);
+    long itest9 = StringToLong(test9);
+    assert(itest == 39156742790);
+    assert(itest1 == 9381434);
+    assert(itest2 == 530012086);
+    assert(itest3 == -23424562);
+    assert(itest4 == 3243234234);
+    assert(itest5 == -34243344);
+    assert(itest6 == -783432324);
+    assert(itest7 == 1234567890123456789);
+    assert(itest8 == -1234567890123456789);
+    assert(itest9 == 21343324);
+       
     cout<<"all asserts passed!"<<endl;
-	return 0;
+    return 0;
 }
 //Return the largest sub product group of size l
 //I split the vector into two sub vectors one of negatives and one of positives
@@ -122,7 +131,7 @@ vector<int> LargestSubProduct(vector<int> in, int l){
   vector<int> neg; //vector to hold negative numbers
   for(int i = 0; i < in.size(); i++){
     if(in[i] < 0){
-      neg.push_back(in[i]i * -1);
+      neg.push_back(in[i] * -1);
       in.erase(in.begin()+i);
     }
   }
@@ -179,9 +188,6 @@ vector<int> LargestSubProduct(vector<int> in, int l){
   return RV; //returning the final vector with the great product
 }
   
-
-}
-
 
 //Code to reverse a string in place pretty simple
 //Time: O(n)
