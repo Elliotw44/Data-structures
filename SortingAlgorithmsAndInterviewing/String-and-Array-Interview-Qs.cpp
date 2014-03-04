@@ -20,6 +20,7 @@ void LongestSum(vector<int> theArray);
 long StringToLong(string s);
 char findUnique(string input);
 string reverse(string theString);
+vector<int> LargestSubProduct(vector<int> in, int l);
 
 
 int main()
@@ -110,6 +111,77 @@ int main()
     cout<<"all asserts passed!"<<endl;
 	return 0;
 }
+//Return the largest sub product group of size l
+//I split the vector into two sub vectors one of negatives and one of positives
+//Then compare the results and decide which is the greater number
+vector<int> LargestSubProduct(vector<int> in, int l){
+ 
+  if(in.size() < l) //if the array is smaller then the group size just return the orginal array
+    return in;
+
+  vector<int> neg; //vector to hold negative numbers
+  for(int i = 0; i < in.size(); i++){
+    if(in[i] < 0){
+      neg.push_back(in[i]i * -1);
+      in.erase(in.begin()+i);
+    }
+  }
+  //sort both arrays O(n * Log(n))
+  in = MergeSort(in);
+  neg = MergeSort(neg);
+  vector<int> RV;
+
+  if(in.size() == 0){
+    for(int k = 0; k < l; k++)
+        RV.push_back(neg[k]);
+  }
+
+  int i = in.size()-1;
+  int j = neg.size()-1;
+
+  while(RV.size() < l){
+    if(in[i] > neg[j]){ //if the pos number is greater then push it to the final vector(RV)
+      RV.push_back(in[i]);
+      in.erase(in.begin() + i--);
+    }
+    else{
+      if(l - RV.size() > 1){ //make sure there is two spots left in the final vector(RV) to possibly push two negative numbers
+        if(in.size() > 1){//if there is more then 1 number left in the in vector then computer both products and compare
+          int PosProd =  in[i] * in[i-1];
+          int NegProd = neg[j] * neg[j-1];
+          if(PosProd >= NegProd){ //if the positive number product is higher add it to the final vector(RV)
+            RV.push_back(in[i]);
+            in.erase(in.begin() + i--);
+            RV.push_back(in[i]);
+            in.erase(in.begin() + i--);
+          }
+          else{ //the negative number product is higher so add it to the final vector(RV)
+            RV.push_back(neg[j] * -1);
+            neg.erase(neg.begin() + j--);
+            RV.push_back(neg[j] * -1);
+            neg.erase(neg.begin() + j--);
+          }
+        }
+        else{ //There is only one item left in the positive vector so add both negative numbers to the final vector(RV)
+          RV.push_back(neg[j] * -1);
+          neg.erase(neg.begin() + j--);
+          RV.push_back(neg[j] * -1);
+          neg.erase(neg.begin() + j--);
+        }
+      }
+      else{ //There is only one spot left in the final vector(RV) so add the postive number
+        RV.push_back(in[i]);
+        in.erase(in.begin() + i--);
+      }
+    }      
+  }
+
+  return RV; //returning the final vector with the great product
+}
+  
+
+}
+
 
 //Code to reverse a string in place pretty simple
 //Time: O(n)
