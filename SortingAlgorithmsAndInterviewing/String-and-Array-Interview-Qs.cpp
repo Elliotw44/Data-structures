@@ -130,10 +130,10 @@ vector<int> LargestSubProduct(vector<int> in, int l){
   in = MergeSort(in);
   neg = MergeSort(neg);
   vector<int> RV;
-
+  //special case where there is no positive numbers so add the 3 smallest negative numbers
   if(in.size() == 0){
     for(int k = 0; k < l; k++)
-        RV.push_back(neg[k]);
+        RV.push_back(neg[k] * -1);
   }
 
   int i = in.size()-1;
