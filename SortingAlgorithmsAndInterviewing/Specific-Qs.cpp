@@ -11,6 +11,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <assert.h>
+
 using namespace std;
 
 
@@ -22,15 +24,18 @@ list<string> sortVersionNums(list<string> unsorted);
 
 void perfectStringShuffle(string& s1);
 
+string TicTacToeAnaly(vector< vector<string> > board);
+
+
 int main()
 {
-  srand (time(NULL));
-  //Question is to sort a list of version numbers.
-  string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
+    srand (time(NULL));
+    //Question is to sort a list of version numbers.
+    string uns[8] = {"10.542","1.10","1.5","1.75","2.0","1.15","1.55","2.1"};
 	list<string> unsortedVs(uns, uns + 8);
 	cout<<"The original unsorted list of version numbers is below" << endl;
 	for(list<string>::iterator it = unsortedVs.begin(); it != unsortedVs.end(); it++)
-		cout<<" "<< *it;
+        cout<<" "<< *it;
 	cout<<endl;
 	list<string> sortedVs = sortVersionNums(unsortedVs);
 	cout << endl << "The sorted list of version numbers is below" << endl;
@@ -49,10 +54,86 @@ int main()
 	FourColoredBallsGame("BGRY", "YGRB");
 
 
-  string maS = "randomThis";
-  perfectStringShuffle(maS);
-  cout <<"The randomly shuffled verions of randomThis is: "<<  maS << endl;
+    string maS = "randomThis";
+    perfectStringShuffle(maS);
+    cout <<"The randomly shuffled verions of randomThis is: "<<  maS << endl;
     
+    //set up some tic tac toe boards!
+	int numOfCols = 3;
+	int numOfRows = 3;
+    
+    // all 8 different tic tac toe wins + empty board + random board
+	vector<vector<string> > board1;
+	board1.resize(numOfCols, vector<string>( numOfRows, ":e"));//empty board
+    
+	vector<vector<string> > board2;
+	board2.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board2[0][0] = ":x"; //:x :x :x
+	board2[0][1] = ":x"; //:e :e :e
+	board2[0][2] = ":x"; //:e :e :e
+    
+	vector<vector<string> > board3;
+	board3.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board3[1][0] = ":o"; //:e :e :e
+	board3[1][1] = ":o"; //:o :o :o
+	board3[1][2] = ":o"; //:e :e :e
+    
+	vector<vector<string> > board4;
+	board4.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board4[2][0] = ":x"; //:e :e :e
+	board4[2][1] = ":x"; //:e :e :e
+	board4[2][2] = ":x"; //:x :x :x
+    
+	vector<vector<string> > board5;
+	board5.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board5[0][0] = ":o"; //:o :e :e
+	board5[1][0] = ":o"; //:o :e :e
+	board5[2][0] = ":o"; //:o :e :e
+    
+	vector<vector<string> > board6;
+	board6.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board6[0][1] = ":x"; //:e :x :e
+	board6[1][1] = ":x"; //:e :x :e
+	board6[2][1] = ":x"; //:e :x :e
+    
+	vector<vector<string> > board7;
+	board7.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board7[0][2] = ":o"; //:e :e :o
+	board7[1][2] = ":o"; //:e :e :o
+	board7[2][2] = ":o"; //:e :e :o
+    
+	vector<vector<string> > board8;
+	board8.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board8[0][0] = ":x"; //:x :e :e
+	board8[1][1] = ":x"; //:e :x :e
+	board8[2][2] = ":x"; //:e :e :x
+    
+	vector<vector<string> > board9;
+	board9.resize(numOfCols, vector<string>( numOfRows, ":e"));
+	board9[0][2] = ":o"; //:e :e :o
+	board9[1][1] = ":o"; //:e :o :e
+	board9[2][0] = ":o"; //:o :e :e
+    
+	vector<vector<string> > board10;
+	board10.resize(numOfCols, vector<string>( numOfRows, ":o"));
+	board10[1][0] = ":x";
+    
+	board10[0][2] = ":x"; //:o :o :x
+	board10[1][1] = ":x"; //:x :x :o
+	board10[2][0] = ":x"; //:x :o :o
+    
+    
+	assert("nil" == TicTacToeAnaly(board1));
+	assert(":x" == TicTacToeAnaly(board2));
+	assert(":o" == TicTacToeAnaly(board3));
+	assert(":x" == TicTacToeAnaly(board4));
+	assert(":o" == TicTacToeAnaly(board5));
+	assert(":x" == TicTacToeAnaly(board6));
+	assert(":o" == TicTacToeAnaly(board7));
+	assert(":x" == TicTacToeAnaly(board8));
+	assert(":o" == TicTacToeAnaly(board9));
+	assert(":x" == TicTacToeAnaly(board10));
+  cout<<"all Tic Tac Toe Asserts Passed."<<endl;   
     
   	return 0;
 }
@@ -175,3 +256,39 @@ void FourColoredBallsGame(string guess, string answer){
 	//now just print the results
 	cout<<"Your guess was: "<< guess<< " The answer was: "<<answer<<" your location score= "<<locationScore<<" and your color score= "<<colorScore<<endl;
 }
+
+
+//Find out if and who won the game of Tic Tac Toe
+//There are eight possible Tic Tac Toe wins and this code checks for all 8
+//if none of the 8 wins where found then we know no one won
+//O(n * m) time could be done more efficiently but this is very readable
+string TicTacToeAnaly(vector< vector<string> > board){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(board[i][j] == ":x" || board[i][j] == ":o"){
+                //check for diagonal win from 0,0
+                if(i == 0 && j == 0){
+                    if(board[i][j] == board[i+1][j+1] && board[i][j] == board[i+2][j+2])
+                        return board[i][j];
+                }
+                //from any i == 0 check for straight line win
+                if(i == 0){
+                    if(board[i][j] == board[i+1][j] && board[i][j] == board[i+2][j])
+                        return board[i][j];
+                }
+                //from any j = 0 check for straight line win
+                if(j == 0){
+                    if(board[i][j] == board[i][j+1] && board[i][j] == board[i][j+2])
+                        return board[i][j];
+                }
+                //from 2,0 check for a diagonal win
+                if(j == 0 && i == 2){
+                    if(board[i][j] == board[i-1][j+1] && board[i][j] == board[i-2][j+2])
+                        return board[i][j];
+                }
+            }
+        }
+    }
+    return "nil";
+}
+

@@ -15,14 +15,20 @@
 using namespace std;
 
 string LongestPalindrome(string s1);
+
 void findTuples(vector<int> array);
+
 void LongestSum(vector<int> theArray);
+
 long StringToLong(string s);
+
 char findUnique(string input);
+
 string reverse(string theString);
+
 vector<int> LargestSubProduct(vector<int> in, int l);
-void LongestIncreasingNumSet(vector<int> theArray);
-string TicTacToeAnaly(vector< vectors<string>> board);
+
+vector<int> LongestIncreasingNumSet(vector<int> theArray);
 
 int main()
 {
@@ -122,7 +128,37 @@ int main()
     assert(itest7 == 1234567890123456789);
     assert(itest8 == -1234567890123456789);
     assert(itest9 == 21343324);
-       
+      
+    //setup some vectors
+    int testIn1[] = {4,3,2,1,0};
+    int testIn2[] = {1,0,1,2,3,0,4,5};
+    int testIn3[] = {0,1,2,0,3,4};
+    int testIn4[] = {0,1,2,3,4,5};
+    int testIn5[] = {4,5};
+    vector<int> Test1 (testIn1, testIn1 + sizeof(testIn1) / sizeof(int));
+    vector<int> Test2 (testIn2, testIn2 + sizeof(testIn2) / sizeof(int));
+    vector<int> Test3 (testIn3, testIn3 + sizeof(testIn3) / sizeof(int));
+    vector<int> Test4 (testIn4, testIn4 + sizeof(testIn4) / sizeof(int));
+    vector<int> Test5 (testIn5, testIn5 + sizeof(testIn5) / sizeof(int));
+        
+     //the correct return values
+    int retArray2[] = {0,1,2,3};
+    int retArray3[] = {0,1,2};
+    int retArray4[] = {0,1,2,3,4,5};
+    int retArray5[] = {4,5};
+        
+    vector<int> retVect1(1,0);
+    vector<int> retVect2 (retArray2, retArray2 + sizeof(retArray2) / sizeof(int));
+    vector<int> retVect3 (retArray3, retArray3 + sizeof(retArray3) / sizeof(int));
+    vector<int> retVect4 (retArray4, retArray4 + sizeof(retArray4) / sizeof(int));
+    vector<int> retVect5 (retArray5, retArray5 + sizeof(retArray5) / sizeof(int));
+        
+    assert(retVect1 == LongestIncreasingNumSet(Test1));
+    assert(retVect2 == LongestIncreasingNumSet(Test2));
+    assert(retVect3 == LongestIncreasingNumSet(Test3));
+    assert(retVect4 == LongestIncreasingNumSet(Test4));
+    assert(retVect5 == LongestIncreasingNumSet(Test5));
+           
     cout<<"all asserts passed!"<<endl;
     return 0;
 }
@@ -283,27 +319,33 @@ void LongestSum(vector<int> theArray){
 }
 //Finds the longest continuous increasing numbers
 //O(n) Time
-void LongestIncreasingNumSet(vector<int> theArray){
+vector<int> LongestIncreasingNumSet(vector<int> theArray){
+	//keep track of our longest  continous increas numbers using a maxLen and ending index
     int len = 1;
     int maxLen = 1;
     int maxEndIndex = 0;
     for(int i = 0; i < theArray.size()-1; i++){
-      if(theArray[i] < theArray[i+1]){
-          len++;
-      }
-      else
-          len = 1;
-      //new Longest increasing continous set
-      if(len > maxLen){
+        if(theArray[i] < theArray[i+1])
+            len++;
+        else
+            len = 1;
+        //check if the current continuous run is longer then our previous maxLen and if so replace the previous maxLen
+        if(len > maxLen){
             maxLen = len;
-            maxEndIndex = i+1;//plus one because we are checking the current value of i with i+1
-		  }
+            maxEndIndex = i+1;//plus one because we are checking the current value of i and i+1, therefore the ending index would be i+1.
+        }
     }
-    cout<<"The Longest continuous increasing Num set is: ";
-    for(int i = 0; i < maxLen; i++)
-  	  cout<<theArray[(maxEndIndex-maxLen+1) + i]<< ", "; //plus one here because Len assumes first index is 1 and not 0
-    cout<<endl;
-}     
+    
+    vector<int> retArray; //return vector
+    
+    for(int i = 1; i <= maxLen; i++){ //now that we have our length and ending Index now we add those values to a return vector
+        retArray.push_back(theArray[(maxEndIndex-maxLen) + i]);
+	}
+	//if we didn't find a match return a vector with one 0
+	if(maxLen == 1)
+        retArray = vector<int>(1, 0);
+	return retArray;
+}
 
 string TicTacToeAnaly(vector< vectors<string>> board){
      for(int i = 0; i < 3; i++){
