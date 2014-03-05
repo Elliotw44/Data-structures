@@ -21,7 +21,8 @@ long StringToLong(string s);
 char findUnique(string input);
 string reverse(string theString);
 vector<int> LargestSubProduct(vector<int> in, int l);
-
+void LongestIncreasingNumSet(vector<int> theArray);
+string TicTacToeAnaly(vector< vectors<string>> board);
 
 int main()
 {
@@ -32,6 +33,11 @@ int main()
         
     cout <<"Longest sum array: 5 10 -8 -8 4 11"<<endl;
     LongestSum(testV);
+
+      
+    int testIn[] = {4,3,2,1,0};
+    vector<int> IncrNumTest (testIn, testIn + sizeof(testIn) / sizeof(int));
+    LongestIncreasingNumSet(IncrNumTest);
 
     cout <<"Original array: 5 8 7 2 10 1 3 4 6 9"<<endl;
     cout<<endl<<endl<<"The Tuples for the list above are below."<<endl;
@@ -275,7 +281,57 @@ void LongestSum(vector<int> theArray){
   	cout<<theArray[i]<< ", ";
     cout<< " with a value of: " <<max<<endl;
 }
-           
+//Finds the longest continuous increasing numbers
+//O(n) Time
+void LongestIncreasingNumSet(vector<int> theArray){
+    int len = 1;
+    int maxLen = 1;
+    int maxEndIndex = 0;
+    for(int i = 0; i < theArray.size()-1; i++){
+      if(theArray[i] < theArray[i+1]){
+          len++;
+      }
+      else
+          len = 1;
+      //new Longest increasing continous set
+      if(len > maxLen){
+            maxLen = len;
+            maxEndIndex = i+1;//plus one because we are checking the current value of i with i+1
+		  }
+    }
+    cout<<"The Longest continuous increasing Num set is: ";
+    for(int i = 0; i < maxLen; i++)
+  	  cout<<theArray[(maxEndIndex-maxLen+1) + i]<< ", "; //plus one here because Len assumes first index is 1 and not 0
+    cout<<endl;
+}     
+
+string TicTacToeAnaly(vector< vectors<string>> board){
+     for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+           if(board[i][j] == ":x" || board[i][j] == ":o"){
+              if(i == 0 && j == 0){
+                  if(board[i][j] == board[i+1][j+1] && board[i][j] == board[i+2][j+2])
+                      return board[i][j]
+              }
+              if(i == 0){
+                  if(board[i][j] == board[i][j+1] && board[i][j] == board[i][j+2])
+                      return board[i][j]
+              }
+              if(j == 0){
+                  if(board[i][j] == board[i+1][j] && board[i][j] == board[i+2][j])
+                      return board[i][j]
+              }
+              if(j == 2 && i == 2){
+                  if(board[i][j] == board[i-1][j-1] && board[i][j] == board[i-2][j-2])
+                      return board[i][j]
+              }
+          }
+      }
+    }
+    return "nil"
+}
+
+
 //find all the a^2 + b^2 = c^2 combinations in a given array
 //O(n^2) Time
 void findTuples(vector<int> array){
