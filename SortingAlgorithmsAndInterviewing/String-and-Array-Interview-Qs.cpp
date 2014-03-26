@@ -36,7 +36,9 @@ int main()
     vector<int> unsort (uns2, uns2 + sizeof(uns2) / sizeof(int)); 
     int testArr[] = {5,10,-8,-8,4,11};
     vector<int> testV (testArr, testArr + sizeof(testArr) / sizeof(int));
-        
+    for(int i = 0; i < testV.size(); i++){
+      cout<<testV[i]<<", ";
+    }    
     cout <<"Longest sum array: 5 10 -8 -8 4 11"<<endl;
     LongestSum(testV);
 
@@ -53,6 +55,9 @@ int main()
     vector<int> sorted = MergeSort(unsort);
     cout<<"binary Search returned: "<<binarySearch(sorted, 5)<<endl;
 
+    for(int i = 0; i < testV.size(); i++){
+      cout<<testV[i]<<", ";
+    }    
     //test find largest sub product
     int grpSize = 3;
     vector<int> subProd = LargestSubProduct(testV, grpSize);
@@ -174,13 +179,14 @@ vector<int> LargestSubProduct(vector<int> in, int l){
   for(int i = 0; i < in.size(); i++){
     if(in[i] < 0){
       neg.push_back(in[i] * -1);
-      in.erase(in.begin()+i);
+      in.erase(in.begin()+(i));
+      i--;
     }
   }
   //sort both arrays O(n * Log(n))
   in = MergeSort(in);
   neg = MergeSort(neg);
-  vector<int> RV;
+  vector<int> RV; //the final vector to return
   //special case where there is no positive numbers so add the 3 smallest negative numbers
   if(in.size() == 0){
     for(int k = 0; k < l; k++)
@@ -189,44 +195,45 @@ vector<int> LargestSubProduct(vector<int> in, int l){
 
   int i = in.size()-1;
   int j = neg.size()-1;
+  
 
   while(RV.size() < l){
-    if(in[i] > neg[j]){ //if the pos number is greater then push it to the final vector(RV)
-      RV.push_back(in[i]);
-      in.erase(in.begin() + i--);
-    }
-    else{
-      if(l - RV.size() > 1){ //make sure there is two spots left in the final vector(RV) to possibly push two negative numbers
-        if(in.size() > 1){//if there is more then 1 number left in the in vector then computer both products and compare
-          int PosProd =  in[i] * in[i-1];
-          int NegProd = neg[j] * neg[j-1];
-          if(PosProd >= NegProd){ //if the positive number product is higher add it to the final vector(RV)
+      if(in.size() > 1 && neg.size() > 1){//if there is more then 1 number left in both vectors then compare both products
+        int PosProd =  in[i] * in[i-1];
+        int NegProd = neg[j] * neg[j-1];
+        
+        if(PosProd >= NegProd || (l - RV.size()) < 2){ //if the positive number product is higher add it to the final vector(RV)
             RV.push_back(in[i]);
             in.erase(in.begin() + i--);
-            RV.push_back(in[i]);
-            in.erase(in.begin() + i--);
-          }
-          else{ //the negative number product is higher so add it to the final vector(RV)
+        }
+        else{ //the negative number product is higher so add it to the final vector(RV)
             RV.push_back(neg[j] * -1);
             neg.erase(neg.begin() + j--);
             RV.push_back(neg[j] * -1);
             neg.erase(neg.begin() + j--);
-          }
-        }
-        else{ //There is only one item left in the positive vector so add both negative numbers to the final vector(RV)
-          RV.push_back(neg[j] * -1);
-          neg.erase(neg.begin() + j--);
-          RV.push_back(neg[j] * -1);
-          neg.erase(neg.begin() + j--);
         }
       }
-      else{ //There is only one spot left in the final vector(RV) so add the postive number
-        RV.push_back(in[i]);
-        in.erase(in.begin() + i--);
+      else{ //There is one item or less in either array
+        if(neg.size() <= 1){//if there is only one negative item left just add positive numbers to the product
+            RV.push_back(in[i]);
+            in.erase(in.begin() + i--);
+        }
+        else{//there are two numbers left in the Negative array so compare their product to the last item in the pos array
+            int PosNum = (in.size() > 0)? in[i] : 0;
+            int NegProd = neg[j] * neg[j-1];
+            if(PosNum >= NegProd){
+              RV.push_back(in[i]);
+              in.erase(in.begin() + i--);
+            }
+            else{
+              RV.push_back(neg[j] * -1);
+              neg.erase(neg.begin() + j--);
+              RV.push_back(neg[j] * -1);
+              neg.erase(neg.begin() + j--);
+            }
+        }
       }
-    }      
   }
-
   return RV; //returning the final vector with the great product
 }
   
