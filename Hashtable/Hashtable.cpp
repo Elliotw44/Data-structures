@@ -1,8 +1,7 @@
 /*
  * Hashtable.cpp
  *
- *  Created on: Jul 24, 2013
- *      Author: eweil
+ *  Author: eweil
  */
 #include<string>
 #include<iostream>
@@ -29,8 +28,7 @@ private:
 Hashtable ::Hashtable(int size) {
 	tablesize = size;
 	numofItems = 0;
-	table = new Node* [size];
-
+	table = new Node* [size]; //create array of linked list
 }
 
 Hashtable::~Hashtable() {
@@ -50,8 +48,8 @@ Hashtable::~Hashtable() {
 int Hashtable:: hash(const std::string key){
       unsigned int hash = 5381;
       for(unsigned int i =0; i < key.length(); i++)
-    	  hash = ((hash << 5) + hash) + (unsigned int)key[i];
-      return hash % tablesize;
+      	hash = ((hash << 5) + hash) + (unsigned int)key[i];
+      return hash % tablesize; // mob by table size
 }
 
 std::string Hashtable::getValue(const std::string key){
