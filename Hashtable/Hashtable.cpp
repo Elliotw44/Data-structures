@@ -15,15 +15,15 @@ public:
 	bool remove(const std::string key);
 	void printAll();
 private:
-   int hash(const std::string key);
-   int tablesize;
-   int numofItems;
-   struct Node {
+	int hash(const std::string key);
+	int tablesize;
+	int numofItems;
+	struct Node {
 	   std::string value;
 	   std::string key;
 	   Node* next;
-   };
-   Node** table;
+   	};
+   	Node** table;
 };
 
 Hashtable ::Hashtable(int size) {
@@ -56,18 +56,18 @@ int Hashtable:: hash(const std::string key){
 
 std::string Hashtable::getValue(const std::string key){
 	int index = hash(key);
-    if(table[index] == 0){
-        return "not Found";
-    }
-    else{
-    	Node* ptr = table[index];
-       while(ptr != 0){
-    	   if(ptr->key == key)
-    		   return ptr->value;
-    	   ptr = ptr->next;
-       }
-       return "not Found";
-    }
+    	if(table[index] == 0){
+        	return "not Found";
+    	}
+	else{
+    		Node* ptr = table[index];
+       		while(ptr != 0){
+    	   		if(ptr->key == key)
+    		   		return ptr->value;
+    	   		ptr = ptr->next;
+       		}
+       		return "not Found";
+    	}
 }
 
 void Hashtable::insert(std::string addme, std::string key){
@@ -83,43 +83,43 @@ void Hashtable::insert(std::string addme, std::string key){
 
 bool Hashtable::remove(const std::string key){
 	int index = hash(key);
-    if(table[index] == 0){
-        return false;
-    }
-    else{
-    	if(table[index]->key == key){
-    		delete table[index];
-    		table[index] = 0;
+    	if(table[index] == 0){
+        	return false;
     	}
     	else{
-    	Node* ptr = table[index];
-    	Node* prev = ptr;
-        while(ptr != 0){
-    	   if(ptr->key == key){
-    		   prev->next = ptr-> next;
-    		   delete ptr;
-    		   break;
-    	    }
-    	    prev = ptr;
-    	    ptr = ptr->next;
-        }
-        ptr = 0;
-        prev = 0;
-       }
-    }
+    		if(table[index]->key == key){
+    			delete table[index];
+    			table[index] = 0;
+    		}
+    		else{
+    			Node* ptr = table[index];
+    			Node* prev = ptr;
+        		while(ptr != 0){
+    	   			if(ptr->key == key){
+    		   			prev->next = ptr-> next;
+    		   			delete ptr;
+    		   			break;
+    	    			}
+    	    			prev = ptr;
+    	    			ptr = ptr->next;
+        		}
+        		ptr = 0;
+        		prev = 0;
+		}
+    	}
     return true;
 }
 
 void Hashtable::printAll(){
 	Node* cur;
 	for (int i = 0; i < tablesize; i++){
-	        std::cout<<i<<std::endl;
-            cur = table[i];
-            while(cur != 0){
-            	Node* next = cur->next;
-                std::cout <<cur->value<<std::endl;
-            	cur = next;
-            }
+		std::cout<<i<<std::endl;
+            	cur = table[i];
+            	while(cur != 0){
+            		Node* next = cur->next;
+                	std::cout <<cur->value<<std::endl;
+            		cur = next;
+            	}
 	}
 }
 
