@@ -20,7 +20,7 @@ int main(){
 	hash.insert("ads1", "sakdhj");
 	hash.insert("allthewaytothelimit", "sak5442j");
 	std::cout<<"the value is "+ hash.getValue("thekeysaresoclose")<<std::endl;
-    hash.remove("buttheyshouldnot");
+  	hash.remove("buttheyshouldnot");
 	std::cout<<"The full hashtable is below"<<std::endl;
 	hash.printAll();
 	return 0;
