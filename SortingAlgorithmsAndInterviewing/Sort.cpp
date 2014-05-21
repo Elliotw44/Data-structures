@@ -21,7 +21,7 @@ vector<int> Merge(vector<int> sublist1, vector<int> sublist2){
 	while(sublist1.size() != i || sublist2.size() != j){
 		if(sublist1.size() == i) //add items from the sublist2 because sublist1 is empty.
 			sorted[i+j] = sublist2[j++];
-		if(sublist2.size() == j)//add items from the sublist1 because sublist2 is empty.
+		else if(sublist2.size() == j)//add items from the sublist1 because sublist2 is empty.
 			sorted[i+j] = sublist1[i++];
 		else //Compare the items in both sublists and attach the smaller one
 		    sorted[i+j] = sublist1[i] < sublist2[j]? sublist1[i++] : sublist[j++];
