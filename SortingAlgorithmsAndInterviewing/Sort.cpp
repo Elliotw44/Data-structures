@@ -14,34 +14,17 @@ vector<int> Merge(vector<int> sublist1, vector<int> sublist2){
 	//new sorted array
 	vector<int> sorted;
 	sorted.resize(sublist1.size() + sublist2.size());
-	//two ints to keep track of where we are in each subarray
+	//two counters to keep track of where we are in each subarray
 	int i = 0;
 	int j = 0;
 	//while both list aren't empty
 	while(sublist1.size() != i || sublist2.size() != j){
-		//if both list aren't empty
-		if(sublist1.size() != i && sublist2.size() != j){
-			//compare if sublist1's item is smaller then sublist2's.
-			if(sublist1[i] <= sublist2[j]){
-				sorted[i+j] = sublist1[i]; //if so add sublist1's item to sorted.
-				i++;
-			}
-			else{
-				sorted[i+j] = sublist2[j];//else add sublist2's item to sorted.
-				j++;
-			}
-		}
-		//if the first half of the list is empty
-		else if(sublist1.size() == i){
-			//add items from the sublist2 because sublist1 is empty.
-			sorted[i+j] = sublist2[j];
-			j++;
-		}
-		else{
-			//add items from the sublist1 because sublist2 is empty.
-			sorted[i+j] = sublist1[i];
-			i++;
-		}
+		if(sublist1.size() == i) //add items from the sublist2 because sublist1 is empty.
+			sorted[i+j] = sublist2[j++];
+		if(sublist2.size() == j)//add items from the sublist1 because sublist2 is empty.
+			sorted[i+j] = sublist1[i++];
+		else //Compare the items in both sublists and attach the smaller one
+		    sorted[i+j] = sublist1[i] < sublist2[j]? sublist1[i++] : sublist[j++];
 	}
 	return sorted;
 }
@@ -50,7 +33,7 @@ vector<int> Merge(vector<int> sublist1, vector<int> sublist2){
 vector<int> MergeSort(vector<int> unsorted){
 	//basecase if the array you passed in was of size one or smaller
 	if(unsorted.size() <= 1)
-    return unsorted;
+    		return unsorted;
 	else{
 		//find middle index of array unsorted
 		int middle = unsorted.size() / 2;
@@ -59,9 +42,9 @@ vector<int> MergeSort(vector<int> unsorted){
 		vector<int> secondHalf;
 		firstHalf.resize(middle);
 		if((unsorted.size() % 2) != 0)
-        secondHalf.resize(middle+1);
+      			secondHalf.resize(middle+1);
 		else
-        secondHalf.resize(middle);
+        		secondHalf.resize(middle);
         
 		//fill firstHalf with the first half of unsorted
 		for(int i = 0; i < middle; i++){
@@ -86,15 +69,15 @@ bool binarySearch(vector<int> array, int item){
 	int searchStart = 0;
 	int searchEnd = array.size()-1;
 	while(searchStart <= searchEnd){
-    middle = (searchStart + searchEnd) / 2;
-    if(item == array[middle])
-        return true;
+    		middle = (searchStart + searchEnd) / 2;
+    		if(item == array[middle])
+        		return true;
 		else if(item > array[middle])
-        searchStart = middle + 1;
+        		searchStart = middle + 1;
 		else
-        searchEnd = middle - 1;
-   }
-  return false;
+        		searchEnd = middle - 1;
+	 }
+  	return false;
 }
 
 //selection sort implmented for vectors(dynamic arrays)
