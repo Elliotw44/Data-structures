@@ -15,156 +15,169 @@ using namespace std;
 
 class BinSearchTree {
 public:
-/**
-* default constructor to create an empty tree
-*/
-BinSearchTree();
+    /**
+    * default constructor to create an empty tree
+    */
+    BinSearchTree();
 
 
-/**
-* default destructor to create an empty tree
-*/
-~BinSearchTree();
+    /**
+    * default destructor to create an empty tree
+    */
+    ~BinSearchTree();
 
-/**
-* this is a copy constructor for tree
-* @param rhsTree
-*/
-BinSearchTree(const BinSearchTree& rhsTree);
+    /**
+    * this is a copy constructor for tree
+    * @param rhsTree
+    */
+    BinSearchTree(const BinSearchTree& rhsTree);
 
-/**
-* Overloaded assignment operator for the class BinSearchTree
-* @param rhsTree
-*/
-BinSearchTree& operator=(const BinSearchTree& rhsTree);
+    /**
+    * Overloaded assignment operator for the class BinSearchTree
+    * @param rhsTree
+    */
+    BinSearchTree& operator=(const BinSearchTree& rhsTree);
 
-/**
-* tests if the tree is empty
-* @return true or false
-*/
-bool isEmpty() const;
+    /**
+    * tests if the tree is empty
+    * @return true or false
+    */
+    bool isEmpty() const;
 
-/**
-* returns the number of nodes in a tree
-* @return  nodeCount
-*/
-int getNodeCount() const;
+    /**
+    * returns the number of nodes in a tree
+    * @return  nodeCount
+    */
+    int getNodeCount() const;
 
-/**
-* inserts a entry into the the tree.
-* @param anItem
-*/
-void insert(const int anItem);
+    /**
+    * inserts a entry into the the tree.
+    * @param anItem
+    */
+    void insert(const int anItem);
 
-void removeItem(const int anItem);
+    void removeItem(const int anItem);
 
-/**
-* This looks up a key in the and then returns true if it finds it, otherwise false
-* @param searchKey
-*/ 
-bool lookup(const int anItem);
+    /**
+    * This looks up a key in the and then returns true if it finds it, otherwise false
+    * @param searchKey
+    */ 
+    bool lookup(const int anItem);
 
-/*
-* Visit the node the first then traverse
-* @param out
-*/
-void preOrderPrint(ostream& out) const;
+    /*
+    * Visit the node the first then traverse
+    * @param out
+    */
+    void preOrderPrint(ostream& out) const;
 
-/*
-* Traverse left then visit the node then traverse right
-* @param out
-*/
-void inOrderPrint(ostream& out) const;
+    /*
+    * Traverse left then visit the node then traverse right
+    * @param out
+    */
+    void inOrderPrint(ostream& out) const;
 
-/*
-* Traverse left and right then visit the node
-* @param out
-*/
-void postOrderPrint(ostream& out) const;
+    /*
+    * Traverse left and right then visit the node
+    * @param out
+    */
+    void postOrderPrint(ostream& out) const;
 
-bool WellFormed();
+    bool WellFormed();
 
-void BFSPrint(ostream& out) const;
+    void BFSPrint(ostream& out) const;
 
-void remove(const int anItem);
+    //void remove(const int anItem);
 
-int LCA(int NodeAValue, int NodeBValue);
+    int LCA(int NodeAValue, int NodeBValue);
+
+    void deleteNode(const int anItem);
+
+    void deleteMin();
+
+    int min();
 
 protected:
 
-struct Node {
-int item;
-Node* leftChild;
-Node* rightChild;
-};
-Node* root;
-// count of nodes
-int nodeCount;
+    struct Node {
+    int item;
+    Node* leftChild;
+    Node* rightChild;
+    };
+    Node* root;
+    // count of nodes
+    int nodeCount;
 
-/**
-* Traverses the tree in preorder
-*@ param subtreeRoot
-*@ param out
-*/
-void preTraverse(const Node* subtreeRoot, ostream& out) const;
+    /**
+    * Traverses the tree in preorder
+    *@ param subtreeRoot
+    *@ param out
+    */
+    void preTraverse(const Node* subtreeRoot, ostream& out) const;
 
-/**
-* Traverses the tree in inorder
-*@ param subtreeRoot
-*@ param out
-*/
-void inTraverse(const Node* subtreeRoot, ostream& out)const;
+    /**
+    * Traverses the tree in inorder
+    *@ param subtreeRoot
+    *@ param out
+    */
+    void inTraverse(const Node* subtreeRoot, ostream& out)const;
 
-/**
-* Traverses the tree in postorder
-*@ param subtreeRoot
-*@ param out
-*/
-void postTraverse(const Node* subtreeRoot, ostream& out)const;
+    /**
+    * Traverses the tree in postorder
+    *@ param subtreeRoot
+    *@ param out
+    */
+    void postTraverse(const Node* subtreeRoot, ostream& out)const;
 
-/**
-* Traverses the tree in preorder and copies the tree into a new tree
-*@ param subtreeRoot
-*@ param newRoot
-*/
-void copyTraverse(const Node* subtreeRoot, Node*& newRoot);
+    /**
+    * Traverses the tree in preorder and copies the tree into a new tree
+    *@ param subtreeRoot
+    *@ param newRoot
+    */
+    void copyTraverse(const Node* subtreeRoot, Node*& newRoot);
 
-/**
-* Traverses the tree in postorder and deletes the nodes
-*@ param subtreeRoot
-*
-*/
-void destructTraverse(Node* subtreeRoot);
+    /**
+    * Traverses the tree in postorder and deletes the nodes
+    *@ param subtreeRoot
+    *
+    */
+    void destructTraverse(Node* subtreeRoot);
 
-/**
-* Traverses the tree in inorder and inserts the nodes at leaf positions
-*@ param subtreeRoot
-*@ param Item
-*/
-void insertTraverse(Node*& subtreeRoot, const int anItem);
+    /**
+    * Traverses the tree in inorder and inserts the nodes at leaf positions
+    *@ param subtreeRoot
+    *@ param Item
+    */
+    void insertTraverse(Node*& subtreeRoot, const int anItem);
 
-/**
-* Traverses the tree in preorder and checks the item it if matchs the key
-*@ param subtreeRoot
-*@ param Found
-*@ param Key
-*/
-bool lookupTraverse(const Node* subtreeRoot,int anItem);
+    /**
+    * Traverses the tree in preorder and checks the item it if matchs the key
+    *@ param subtreeRoot
+    *@ param Found
+    *@ param Key
+    */
+    bool lookupTraverse(const Node* subtreeRoot,int anItem);
 
-void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
+    void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
 
-void adopt1(Node* subtreeRoot, Node*& parent);
+    void adopt1(Node* subtreeRoot, Node*& parent);
 
-void adopt2(Node* subtreeRoot);
+    void adopt2(Node* subtreeRoot);
 
-int getHeight(const Node* subnode) const;
+    int getHeight(const Node* subnode) const;
 
-bool FormedTraverse(const Node* subtreeRoot) const;
+    bool FormedTraverse(const Node* subtreeRoot) const;
 
-Node* LCAHelp(int NodeA, int NodeB, Node* subRoot);
+    Node* LCAHelp(int NodeA, int NodeB, Node* subRoot);
 
-bool covers(int PchildValue, Node* startNode);
+    bool covers(int PchildValue, Node* startNode);
 
-Node* inOrderSuc(Node* subtreeRoot);
+    Node* inOrderSuc(Node* subtreeRoot);
+
+private:
+    Node* deleteNode(Node* x, const int anItem);
+
+    Node* deleteMin(Node* x);
+
+    Node* min(Node* x);
 };
 #endif

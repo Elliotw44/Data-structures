@@ -52,7 +52,9 @@ int main()
   tree.removeItem(1);
   tree.removeItem(7);
   tree.removeItem(4);
+  tree.BFSPrint(cout);
   tree.removeItem(13);
+  tree.BFSPrint(cout);
   tree.removeItem(14);
   cout<< "printing the whole tree after values being removed"<<endl;
   tree.BFSPrint(cout);
