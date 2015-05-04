@@ -233,12 +233,66 @@ void BinSearchTree::removeItem(const int anItem)
 	cout << " The tree is empty."<< endl;
   else if(root != NULL)
     {
-      if(!lookup(anItem))
-			cout<< "The item isn't in the tree."<< endl;
-      else
-			deleteTraverse(root, root, anItem);
+        if (!lookup(anItem))
+            cout << "The item isn't in the tree." << endl;
+        else
+            //deleteTraverse(root, root, anItem);
+            deleteNode(anItem);
       nodeCount --;
     }
+}
+
+void BinSearchTree::deleteNode(const int anItem) {
+    root = deleteNode(root, anItem);
+}
+
+BinSearchTree::Node* BinSearchTree::deleteNode(BinSearchTree::Node* x, const int anItem) {
+    if (x == NULL) return NULL;
+    if (anItem < x->item) {
+        x->leftChild = deleteNode(x->leftChild, anItem);
+    } else if (anItem > x->item) {
+        x->rightChild = deleteNode(x->rightChild, anItem);
+    } else {
+        if (x->rightChild == NULL) return x->leftChild;
+        if (x->leftChild == NULL) return x->rightChild;
+        BinSearchTree::Node* t = x;
+        x = min(t->rightChild);
+        x->rightChild = deleteMin(t->rightChild);
+        x->leftChild = t->leftChild;
+    }
+
+    return x;
+}
+
+void BinSearchTree::deleteMin() {
+    root = deleteMin(root);
+}
+
+/*BinSearchTree::Node* BinSearchTree::deleteMin(Node* x) {
+    if (x->leftChild == NULL) return x->rightChild;
+    Node* temp = deleteMin(x->leftChild);
+    if (temp == NULL) {
+        x = NULL;
+    } else {
+        x->rightChild = NULL;
+        x = temp;
+    }
+    return x;
+}*/
+
+BinSearchTree::Node* BinSearchTree::deleteMin(Node* x) {
+    if (x->leftChild == NULL) return x->rightChild;
+    x->leftChild = deleteMin(x->leftChild);
+    return x;
+}
+
+int BinSearchTree::min() {
+    return min(root)->item;
+}
+
+BinSearchTree::Node* BinSearchTree::min(BinSearchTree::Node* x) {
+    if (x->leftChild == NULL) return x;
+    return min(x->leftChild);
 }
 
 void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem)
@@ -256,7 +310,7 @@ void BinSearchTree::deleteTraverse(Node*& subtreeRoot, Node* parent, const int a
 	     || (subtreeRoot->rightChild != NULL && 
 		 subtreeRoot->leftChild == NULL)) 
 	    {
-		  //special case where you haven't recursed yet
+		 //special case where you haven't recursed yet
 		  if(parent == subtreeRoot){
 			  if(parent->rightChild != NULL)
 				  subtreeRoot = parent->rightChild;
@@ -364,7 +418,7 @@ void BinSearchTree::adopt2(Node* subtreeRoot)
   }
 }
 
-BinSearchTree::Node* BinSearchTree ::inOrderSuc(Node* subtreeRoot)
+BinSearchTree::Node* BinSearchTree::inOrderSuc(Node* subtreeRoot)
 {
   Node* finder = subtreeRoot;
   finder = subtreeRoot->rightChild;
