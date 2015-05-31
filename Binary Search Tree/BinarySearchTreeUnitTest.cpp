@@ -1,14 +1,14 @@
-#include "stdafx.h"
+#include "..\..\..\Visual Studio 2013\Projects\BinarySearchTree\BinarySearchTree\stdafx.h"
 #include "CppUnitTest.h"
-#include "../../../../GitHub/C-Data-structures/Binary Search Tree/binSearchTree.h"
+#include "binSearchTree.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace BinarySearchTree
 {
-	TEST_CLASS(BinarySearchTreeUnitTest)
-	{
-	public:
+    TEST_CLASS(BinarySearchTreeUnitTest)
+    {
+    public:
         BinSearchTree tree;
 
         BinarySearchTreeUnitTest() {
@@ -32,9 +32,22 @@ namespace BinarySearchTree
             tree.insert(12);
             tree.insert(13);
         }
-		
-		TEST_METHOD(Test_LeastCommonAncestor) {
-			// TODO: Your test code here
+
+        /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_DefaultTreeNodeCount)
+        TEST_IGNORE()
+        END_TEST_METHOD_ATTRIBUTE()*/
+
+        TEST_METHOD(Test_DefaultTreeNodeCount) {
+            BinSearchTree tree2;
+            tree2.insert(10);
+            int actual = BinSearchTree::numberOfCreatedNodes();
+            int expected = 15;
+
+            Assert::AreEqual(actual, expected);
+
+        }
+
+        TEST_METHOD(Test_LeastCommonAncestor) {
             int actual = tree.LCA(13, 7);
             int expected = 10;
             Assert::AreEqual(actual, expected);
@@ -47,7 +60,7 @@ namespace BinarySearchTree
         }
 
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_RemoveRoot)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_RemoveRoot) {
             tree.removeItem(10);
@@ -56,7 +69,7 @@ namespace BinarySearchTree
         }
 
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_Remove2Node)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_Remove2Node) {
             tree.removeItem(10);
@@ -67,7 +80,7 @@ namespace BinarySearchTree
         }
 
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_TreeIsNotWellFormed2)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_TreeIsNotWellFormed2) {
             tree.removeItem(10);
@@ -92,31 +105,8 @@ namespace BinarySearchTree
             Assert::AreEqual(tree.min(), 1);
         }
 
-        TEST_METHOD(Test_DeleteMinimum1) {
-            tree.deleteMin();
-            Assert::IsFalse(tree.lookup(1));
-        }
-
-        TEST_METHOD(Test_DeleteMinimum2) {
-            BinSearchTree tree2;
-            tree2.insert(10);
-            tree2.insert(5);
-            tree2.insert(8);
-            tree2.insert(6);
-            tree2.insert(7);
-            tree2.insert(16);
-            tree2.insert(20);
-            tree2.insert(14);
-            tree2.insert(15);
-            tree2.insert(2);
-            tree2.insert(4);
-            tree2.deleteMin();
-            Assert::IsFalse(tree2.lookup(2));
-            Assert::IsTrue(tree2.lookup(4));
-        }
-
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_SimpleCompleteDeletion1)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
 
         TEST_METHOD(Test_SimpleCompleteDeletion1) {
@@ -128,7 +118,7 @@ namespace BinarySearchTree
         }
 
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_SimpleCompleteDeletion2)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
 
         TEST_METHOD(Test_SimpleCompleteDeletion2) {
@@ -141,8 +131,89 @@ namespace BinarySearchTree
             Assert::IsTrue(tree2.isEmpty());
         }
 
+        /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_NullRightChildDeletion1)
+        TEST_IGNORE()
+        END_TEST_METHOD_ATTRIBUTE()*/
+
+        TEST_METHOD(Test_NullRightChildDeletion1) {
+            BinSearchTree tree2;
+
+            tree2.insert(10);
+            tree2.insert(5);
+            tree2.insert(3);
+            tree2.insert(4);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree2.removeItem(5);
+            Assert::IsFalse(tree2.lookup(5));
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+        }
+
+        /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_NullRightChildDeletion2)
+        TEST_IGNORE()
+        END_TEST_METHOD_ATTRIBUTE()*/
+
+        TEST_METHOD(Test_NullRightChildDeletion2) {
+            BinSearchTree tree2;
+
+            tree2.insert(10);
+            tree2.insert(5);
+            tree2.insert(7);
+            tree2.insert(6);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree2.removeItem(5);
+            Assert::IsFalse(tree2.lookup(5));
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+        }
+
+        /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_NullLeftChildDeletion1)
+        TEST_IGNORE()
+        END_TEST_METHOD_ATTRIBUTE()*/
+
+        TEST_METHOD(Test_NullLeftChildDeletion1) {
+            BinSearchTree tree2;
+
+            tree2.insert(10);
+            tree2.insert(15);
+            tree2.insert(13);
+            tree2.insert(14);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree2.removeItem(15);
+            Assert::IsFalse(tree2.lookup(15));
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+        }
+
+        /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_NullLeftChildDeletion2)
+        TEST_IGNORE()
+        END_TEST_METHOD_ATTRIBUTE()*/
+
+        TEST_METHOD(Test_NullLeftChildDeletion2) {
+            BinSearchTree tree2;
+
+            tree2.insert(10);
+            tree2.insert(15);
+            tree2.insert(17);
+            tree2.insert(16);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree2.removeItem(15);
+            Assert::IsFalse(tree2.lookup(15));
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+        }
+
+        TEST_METHOD(Test_TwoChildDeletion1) {
+            BinSearchTree tree2;
+
+            tree2.insert(10);
+            tree2.insert(15);
+            tree2.insert(13);
+            tree2.insert(16);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree2.removeItem(15);
+            Assert::IsFalse(tree2.lookup(15));
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+        }
+
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_ComplexCompleteDeletion1)
-            TEST_IGNORE()
+        TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
 
         TEST_METHOD(Test_ComplexCompleteDeletion1) {
@@ -162,6 +233,9 @@ namespace BinarySearchTree
             tree.removeItem(14);
 
             Assert::IsTrue(tree.isEmpty());
+            int actual = BinSearchTree::numberOfCreatedNodes();
+            int expected = 0;
+            Assert::AreEqual(actual, expected);
         }
-	};
+    };
 }
