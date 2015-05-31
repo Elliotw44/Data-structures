@@ -186,8 +186,6 @@ protected:
 
     bool covers(int PchildValue, Node* startNode);
 
-    Node* inOrderSuc(Node* subtreeRoot);
-
 private:
     Node* deleteNode(Node* x, const int anItem);
 

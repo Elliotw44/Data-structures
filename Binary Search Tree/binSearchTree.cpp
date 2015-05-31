@@ -293,15 +293,6 @@ BinSearchTree::Node* BinSearchTree::min(BinSearchTree::Node* x) {
     return min(x->leftChild);
 }
 
-BinSearchTree::Node* BinSearchTree::inOrderSuc(Node* subtreeRoot)
-{
-    Node* finder = subtreeRoot;
-    finder = subtreeRoot->rightChild;
-    while (finder->leftChild != NULL && finder->leftChild->leftChild != NULL)
-        finder = finder->leftChild;
-    return finder;
-}
-
 int BinSearchTree::LCA(int NodeA, int NodeB)
 {
     Node* LCA = LCAHelp(NodeA, NodeB, root);
