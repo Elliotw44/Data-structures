@@ -61,7 +61,7 @@ public:
     /**
     * This looks up a key in the and then returns true if it finds it, otherwise false
     * @param searchKey
-    */ 
+    */
     bool lookup(const int anItem);
 
     /*
@@ -86,23 +86,44 @@ public:
 
     void BFSPrint(ostream& out) const;
 
-    //void remove(const int anItem);
-
     int LCA(int NodeAValue, int NodeBValue);
 
     void deleteNode(const int anItem);
 
-    void deleteMin();
-
     int min();
 
-protected:
 
+
+    static int numberOfCreatedNodes();
+
+protected:
     struct Node {
-    int item;
-    Node* leftChild;
-    Node* rightChild;
+        int item;
+        Node* leftChild;
+        Node* rightChild;
+
+        Node::Node() {
+            createdNodes++;
+        }
+
+        Node::Node(Node* node) {
+            item = node->item;
+            leftChild = node->leftChild;
+            rightChild = node->rightChild;
+            createdNodes++;
+        }
+
+        Node::~Node() {
+            createdNodes--;
+        }
+
+        static int nodeCount() {
+            return createdNodes;
+        }
+
+        static int createdNodes;
     };
+
     Node* root;
     // count of nodes
     int nodeCount;
@@ -155,13 +176,7 @@ protected:
     *@ param Found
     *@ param Key
     */
-    bool lookupTraverse(const Node* subtreeRoot,int anItem);
-
-    void deleteTraverse(Node*& subtreeRoot, Node* parent, const int anItem);
-
-    void adopt1(Node* subtreeRoot, Node*& parent);
-
-    void adopt2(Node* subtreeRoot);
+    bool lookupTraverse(const Node* subtreeRoot, int anItem);
 
     int getHeight(const Node* subnode) const;
 
@@ -176,7 +191,7 @@ protected:
 private:
     Node* deleteNode(Node* x, const int anItem);
 
-    Node* deleteMin(Node* x);
+    Node* twoChildDeleteHelper(Node* x, int& value);
 
     Node* min(Node* x);
 };
