@@ -58,15 +58,84 @@ int BinSearchTree::getNodeCount() const
     return nodeCount;
 }
 
-void BinSearchTree::insert(const int anItem)
+void BinSearchTree::insert(const int anItem, LoopType type)
 {
-    insertTraverse(root, anItem);
+    if (type == LoopType::Recursive)
+        recursiveInsert(root, anItem);
+    else if (type == LoopType::Iterative)
+        iterativeInsert(root, NULL, anItem);
 }
-bool BinSearchTree::lookup(const int anItem)
+
+void BinSearchTree::recursiveInsert(Node*& subtreeRoot, const int anItem)
 {
-    bool found = lookupTraverse(root, anItem);
+
+    if (subtreeRoot == NULL)
+    {
+        subtreeRoot = new Node(anItem);
+        nodeCount++;
+    } else if (subtreeRoot->item == anItem) {
+        cout << "Item exists\n";
+        return;
+    } else if (anItem < subtreeRoot->item) {
+        recursiveInsert((subtreeRoot->leftChild), anItem);
+    } else {
+        recursiveInsert((subtreeRoot->rightChild), anItem);
+    }
+}
+
+void BinSearchTree::iterativeInsert(Node*& subtreeRoot, Node* parentNode, const int anItem) {
+    Node* helper = subtreeRoot;
+    while (helper != NULL)
+    {
+        if (helper->item == anItem)
+            return;
+        parentNode = helper;
+        helper = anItem > helper->item ? helper->rightChild : helper->leftChild;
+    }
+    if (parentNode){
+        Node* node = new Node(anItem);
+        if (anItem > parentNode->item) {
+            parentNode->rightChild = node;
+        } else {
+            parentNode->leftChild = node;
+        }
+    }
+    else
+    {
+        subtreeRoot = new Node(anItem);
+    }
+}
+
+bool BinSearchTree::lookup(const int anItem, LoopType type)
+{
+    bool found;
+    if (type == LoopType::Recursive)
+        found = recursiveGet(root, anItem);
+    else if (type == LoopType::Iterative)
+        found = iterativeGet(root, anItem);
     return found;
 }
+
+bool BinSearchTree::recursiveGet(const Node* subtreeRoot, const int anItem)
+{
+    if (subtreeRoot == NULL)
+        return false;
+    else if (anItem == subtreeRoot->item)
+        return true;
+    else
+        return(recursiveGet(subtreeRoot->rightChild, anItem) || recursiveGet(subtreeRoot->leftChild, anItem));
+}
+
+bool BinSearchTree::iterativeGet(const Node* subtreeRoot, const int anItem) {
+    while (subtreeRoot != NULL)
+    {
+        if (subtreeRoot->item == anItem)
+            return true;
+        subtreeRoot = anItem > subtreeRoot->item ? subtreeRoot->rightChild : subtreeRoot->leftChild;
+    }
+    return false;
+}
+
 void BinSearchTree::preOrderPrint(ostream& out) const
 {
     preTraverse(root, out);
@@ -138,6 +207,7 @@ void BinSearchTree::inTraverse(const Node* subtreeRoot, ostream& out) const
     out << subtreeRoot->item << "\n";
     inTraverse(subtreeRoot->rightChild, out);
 }
+
 void BinSearchTree::postTraverse(const Node* subtreeRoot, ostream& out) const
 {
     if (subtreeRoot == NULL)
@@ -169,36 +239,6 @@ void BinSearchTree::copyTraverse(const Node* subtreeRoot, Node*& newRoot)
     }
 }
 
-bool BinSearchTree::lookupTraverse(const Node* subtreeRoot, const int anItem)
-{
-    if (subtreeRoot == NULL)
-        return false;
-    else if (anItem == subtreeRoot->item)
-        return true;
-    else
-        return(lookupTraverse(subtreeRoot->rightChild, anItem) || lookupTraverse(subtreeRoot->leftChild, anItem));
-}
-
-void BinSearchTree::insertTraverse(Node*& subtreeRoot, const int anItem)
-{
-
-    if (subtreeRoot == NULL)
-    {
-        subtreeRoot = new Node;
-        subtreeRoot->item = anItem;
-        subtreeRoot->leftChild = NULL;
-        subtreeRoot->rightChild = NULL;
-        nodeCount++;
-    } else if (subtreeRoot->item == anItem) {
-        cout << "Item exists\n";
-        return;
-    } else if (anItem < subtreeRoot->item) {
-        insertTraverse((subtreeRoot->leftChild), anItem);
-    } else {
-        insertTraverse((subtreeRoot->rightChild), anItem);
-    }
-}
-
 int BinSearchTree::getHeight(const Node* subnode) const
 {
 
@@ -224,13 +264,14 @@ bool BinSearchTree::FormedTraverse(const Node* subtreeRoot) const
     }
     return(FormedTraverse(subtreeRoot->rightChild) && FormedTraverse(subtreeRoot->leftChild));
 }
+
 bool BinSearchTree::WellFormed()
 {
     bool Formed = FormedTraverse(root);
     return Formed;
 }
 
-void BinSearchTree::removeItem(const int anItem)
+void BinSearchTree::remove(const int anItem, LoopType type)
 {
     if (root == NULL)
         cout << " The tree is empty." << endl;
@@ -239,21 +280,25 @@ void BinSearchTree::removeItem(const int anItem)
         if (!lookup(anItem))
             cout << "The item isn't in the tree." << endl;
         else
-            deleteNode(anItem);
+            if (type == LoopType::Recursive)
+                recursiveDelete(anItem);
+            else if (type == LoopType::Iterative)
+                iterativeDelete(root, NULL, anItem);
+            
         nodeCount--;
     }
 }
 
-void BinSearchTree::deleteNode(const int anItem) {
-    root = deleteNode(root, anItem);
+void BinSearchTree::recursiveDelete(const int anItem) {
+    root = recursiveDelete(root, anItem);
 }
 
-BinSearchTree::Node* BinSearchTree::deleteNode(BinSearchTree::Node* x, const int anItem) {
+BinSearchTree::Node* BinSearchTree::recursiveDelete(BinSearchTree::Node* x, const int anItem) {
     if (x == NULL) return NULL;
     if (anItem < x->item) {
-        x->leftChild = deleteNode(x->leftChild, anItem);
+        x->leftChild = recursiveDelete(x->leftChild, anItem);
     } else if (anItem > x->item) {
-        x->rightChild = deleteNode(x->rightChild, anItem);
+        x->rightChild = recursiveDelete(x->rightChild, anItem);
     } else {
         if (x->rightChild == NULL) {
             Node* t = x->leftChild;
@@ -293,7 +338,65 @@ BinSearchTree::Node* BinSearchTree::min(BinSearchTree::Node* x) {
     return min(x->leftChild);
 }
 
-int BinSearchTree::LCA(int NodeA, int NodeB)
+void BinSearchTree::iterativeDelete(Node*& subtreeRoot, Node* parentNode, const int anItem) {
+    Node* helper = subtreeRoot;
+    while (helper->item != anItem) {
+        if (helper == NULL)
+            return;
+        parentNode = helper;
+        helper = anItem > helper->item ? helper->rightChild : helper->leftChild;
+    }
+    if (helper->item == root->item){
+        if (helper->rightChild != NULL ^ helper->leftChild != NULL){
+            subtreeRoot = helper->leftChild == NULL ? subtreeRoot = helper->rightChild : helper->leftChild;
+            delete helper;
+            return;
+        }
+        if (helper->rightChild == NULL && helper->leftChild == NULL){
+            subtreeRoot = NULL;
+            delete helper;
+            return;
+        }
+    }
+    if (helper->leftChild == NULL || helper->rightChild == NULL){
+        iterativeNodeDelete(helper, parentNode);
+        return;
+    }
+    
+    Node* successor = helper->rightChild;
+    Node* successorParent = helper;
+    while (successor->leftChild != NULL) {
+        successorParent = successor;
+        successor = successor->leftChild;
+    }
+
+    helper->item = iterativeNodeDelete(successor, successorParent);
+}
+
+int BinSearchTree::iterativeNodeDelete(Node* toBeDeleted, Node* parentPointer) {
+    bool onRight = toBeDeleted->item > parentPointer->item ? true : false;
+    int successorValue = toBeDeleted->item;
+
+    if (toBeDeleted->rightChild == NULL) {
+        if (onRight){
+            parentPointer->rightChild = toBeDeleted->leftChild;
+        } else {
+            parentPointer->leftChild = toBeDeleted->leftChild;
+        }
+        delete toBeDeleted;
+    } else {
+        if (onRight){
+            parentPointer->rightChild = toBeDeleted->rightChild;
+        } else {
+            parentPointer->leftChild = toBeDeleted->rightChild;
+        }
+        delete toBeDeleted;
+    }
+
+    return successorValue;
+}
+
+int BinSearchTree::LCA(const int NodeA, const int NodeB)
 {
     Node* LCA = LCAHelp(NodeA, NodeB, root);
     if (LCA != NULL)
@@ -302,12 +405,12 @@ int BinSearchTree::LCA(int NodeA, int NodeB)
         return -1;
 }
 
-BinSearchTree::Node*  BinSearchTree::LCAHelp(int NodeAValue, int NodeBValue, Node* subRoot)
+BinSearchTree::Node*  BinSearchTree::LCAHelp(const int NodeAValue, const int NodeBValue, Node* subRoot)
 {
     if (subRoot == NULL)
         return NULL;
-    bool AOnRight = covers(NodeAValue, subRoot->rightChild);
-    bool BOnRight = covers(NodeBValue, subRoot->rightChild);
+    bool AOnRight = recursiveGet(subRoot->rightChild, NodeAValue);
+    bool BOnRight = recursiveGet(subRoot->rightChild, NodeBValue);
     if (AOnRight != BOnRight)
         return subRoot;
     else if (AOnRight && BOnRight)
@@ -316,13 +419,4 @@ BinSearchTree::Node*  BinSearchTree::LCAHelp(int NodeAValue, int NodeBValue, Nod
         return(LCAHelp(NodeAValue, NodeBValue, subRoot->leftChild));
 
 
-}
-bool BinSearchTree::covers(int PchildValue, Node* startNode)
-{
-    if (startNode == NULL)
-        return false;
-    else if (startNode->item == PchildValue)
-        return true;
-
-    return(covers(PchildValue, startNode->leftChild) || covers(PchildValue, startNode->rightChild));
 }

@@ -26,6 +26,11 @@ public:
     */
     ~BinSearchTree();
 
+    enum class LoopType {
+        Iterative,
+        Recursive
+    };
+
     /**
     * this is a copy constructor for tree
     * @param rhsTree
@@ -54,15 +59,15 @@ public:
     * inserts a entry into the the tree.
     * @param anItem
     */
-    void insert(const int anItem);
+    void insert(const int anItem, LoopType type = LoopType::Iterative);
 
-    void removeItem(const int anItem);
+    void remove(const int anItem, LoopType type = LoopType::Iterative);
 
     /**
     * This looks up a key in the and then returns true if it finds it, otherwise false
     * @param searchKey
     */
-    bool lookup(const int anItem);
+    bool lookup(const int anItem, LoopType type = LoopType::Iterative);
 
     /*
     * Visit the node the first then traverse
@@ -86,13 +91,9 @@ public:
 
     void BFSPrint(ostream& out) const;
 
-    int LCA(int NodeAValue, int NodeBValue);
-
-    void deleteNode(const int anItem);
+    int LCA(const int NodeAValue, const int NodeBValue);
 
     int min();
-
-
 
     static int numberOfCreatedNodes();
 
@@ -104,6 +105,15 @@ protected:
 
         Node::Node() {
             createdNodes++;
+            leftChild = NULL;
+            rightChild = NULL;
+        }
+
+        Node::Node(int anItem) {
+            createdNodes++;
+            leftChild = NULL;
+            rightChild = NULL;
+            item = anItem;
         }
 
         Node::Node(Node* node) {
@@ -168,7 +178,9 @@ protected:
     *@ param subtreeRoot
     *@ param Item
     */
-    void insertTraverse(Node*& subtreeRoot, const int anItem);
+    void recursiveInsert(Node*& subtreeRoot, const int anItem);
+
+    void iterativeInsert(Node*& subtreeRoot, Node* parentNode, const int anItem);
 
     /**
     * Traverses the tree in preorder and checks the item it if matchs the key
@@ -176,18 +188,24 @@ protected:
     *@ param Found
     *@ param Key
     */
-    bool lookupTraverse(const Node* subtreeRoot, int anItem);
+    bool recursiveGet(const Node* subtreeRoot, const int anItem);
+
+    bool iterativeGet(const Node* subtreeRoot, const int anItem);
+
+    void recursiveDelete(const int anItem);
+
+    void iterativeDelete(Node*& subtreeRoot, Node* parentNode, const int anItem);
+
+    int iterativeNodeDelete(Node* toBeDeleted, Node* parentPointer);
 
     int getHeight(const Node* subnode) const;
 
     bool FormedTraverse(const Node* subtreeRoot) const;
 
-    Node* LCAHelp(int NodeA, int NodeB, Node* subRoot);
-
-    bool covers(int PchildValue, Node* startNode);
+    Node* LCAHelp(const int NodeA, const int NodeB, Node* subRoot);
 
 private:
-    Node* deleteNode(Node* x, const int anItem);
+    Node* recursiveDelete(Node* x, const int anItem);
 
     Node* twoChildDeleteHelper(Node* x, int& value);
 

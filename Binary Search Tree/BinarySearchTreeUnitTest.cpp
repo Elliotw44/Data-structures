@@ -63,7 +63,7 @@ namespace BinarySearchTree
         TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_RemoveRoot) {
-            tree.removeItem(10);
+            tree.remove(10);
             bool actual = tree.lookup(10);
             Assert::IsFalse(actual);
         }
@@ -72,23 +72,30 @@ namespace BinarySearchTree
         TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_Remove2Node) {
-            tree.removeItem(10);
-            tree.removeItem(16);
-            bool actual = tree.lookup(16);
-            tree.BFSPrint(cout);
+            int nodes = BinSearchTree::numberOfCreatedNodes();
+            tree.remove(10);
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+            bool actual = tree.lookup(10);
             Assert::IsFalse(actual);
+            nodes = BinSearchTree::numberOfCreatedNodes();
+            tree.remove(16);
+            Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
+            actual = tree.lookup(16);
+            Assert::IsFalse(actual);
+            tree.BFSPrint(cout);
+            
         }
 
         /*BEGIN_TEST_METHOD_ATTRIBUTE(Test_TreeIsNotWellFormed2)
         TEST_IGNORE()
         END_TEST_METHOD_ATTRIBUTE()*/
         TEST_METHOD(Test_TreeIsNotWellFormed2) {
-            tree.removeItem(10);
-            tree.removeItem(16);
-            tree.removeItem(6);
-            tree.removeItem(15);
-            tree.removeItem(8);
-            tree.removeItem(5);
+            tree.remove(10);
+            tree.remove(16);
+            tree.remove(6);
+            tree.remove(15);
+            tree.remove(8);
+            tree.remove(5);
             bool actual = tree.WellFormed();
             Assert::IsFalse(actual);
         }
@@ -113,7 +120,7 @@ namespace BinarySearchTree
             BinSearchTree tree2;
 
             tree2.insert(10);
-            tree2.removeItem(10);
+            tree2.remove(10);
             Assert::IsTrue(tree2.isEmpty());
         }
 
@@ -126,8 +133,8 @@ namespace BinarySearchTree
 
             tree2.insert(13);
             tree2.insert(14);
-            tree2.removeItem(13);
-            tree2.removeItem(14);
+            tree2.remove(13);
+            tree2.remove(14);
             Assert::IsTrue(tree2.isEmpty());
         }
 
@@ -143,7 +150,7 @@ namespace BinarySearchTree
             tree2.insert(3);
             tree2.insert(4);
             int nodes = BinSearchTree::numberOfCreatedNodes();
-            tree2.removeItem(5);
+            tree2.remove(5);
             Assert::IsFalse(tree2.lookup(5));
             Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
         }
@@ -160,7 +167,7 @@ namespace BinarySearchTree
             tree2.insert(7);
             tree2.insert(6);
             int nodes = BinSearchTree::numberOfCreatedNodes();
-            tree2.removeItem(5);
+            tree2.remove(5);
             Assert::IsFalse(tree2.lookup(5));
             Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
         }
@@ -177,7 +184,7 @@ namespace BinarySearchTree
             tree2.insert(13);
             tree2.insert(14);
             int nodes = BinSearchTree::numberOfCreatedNodes();
-            tree2.removeItem(15);
+            tree2.remove(15);
             Assert::IsFalse(tree2.lookup(15));
             Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
         }
@@ -194,7 +201,7 @@ namespace BinarySearchTree
             tree2.insert(17);
             tree2.insert(16);
             int nodes = BinSearchTree::numberOfCreatedNodes();
-            tree2.removeItem(15);
+            tree2.remove(15);
             Assert::IsFalse(tree2.lookup(15));
             Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
         }
@@ -207,7 +214,7 @@ namespace BinarySearchTree
             tree2.insert(13);
             tree2.insert(16);
             int nodes = BinSearchTree::numberOfCreatedNodes();
-            tree2.removeItem(15);
+            tree2.remove(15);
             Assert::IsFalse(tree2.lookup(15));
             Assert::AreEqual(nodes, BinSearchTree::numberOfCreatedNodes() + 1);
         }
@@ -217,20 +224,20 @@ namespace BinarySearchTree
         END_TEST_METHOD_ATTRIBUTE()*/
 
         TEST_METHOD(Test_ComplexCompleteDeletion1) {
-            tree.removeItem(10);
-            tree.removeItem(16);
-            tree.removeItem(6);
-            tree.removeItem(15);
-            tree.removeItem(8);
-            tree.removeItem(5);
-            tree.removeItem(12);
-            tree.removeItem(20);
-            tree.removeItem(2);
-            tree.removeItem(1);
-            tree.removeItem(7);
-            tree.removeItem(4);
-            tree.removeItem(13);
-            tree.removeItem(14);
+            tree.remove(10);
+            tree.remove(16);
+            tree.remove(6);
+            tree.remove(15);
+            tree.remove(8);
+            tree.remove(5);
+            tree.remove(12);
+            tree.remove(20);
+            tree.remove(2);
+            tree.remove(1);
+            tree.remove(7);
+            tree.remove(4);
+            tree.remove(13);
+            tree.remove(14);
 
             Assert::IsTrue(tree.isEmpty());
             int actual = BinSearchTree::numberOfCreatedNodes();
