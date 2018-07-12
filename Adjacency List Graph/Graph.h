@@ -1,36 +1,34 @@
-//@file Graph.h
-//class for a graph
-
+// some shit
+#pragma once
 #include <vector>
-#include <list>
-#include <map>
-#include <iostream>
-#include <limits>
-#include "Edge.h"
 #include "Vertex.h"
 using namespace std;
 class Graph
 {
 public:
-	int numVert;
-	int numEdge;
-    //vector that holds a map of all adjacent vertices
-	vector<map<int, int> > adjList;
-    vector<Vertex> vInfo;
-	Graph(int n);
+	Graph()
+	:m_vertices(vector<Vertex>())
+	{}
 
-	int getNumVert() const;
+	Graph(vector<Vertex> input)
+	:m_vertices(input)
+	{}
 
-	int getNumEdge() const;
+	void addVertex(Vertex V)
+	{
+		m_vertices.push_back(V);
+	}
 
-	int getWeight(Edge e);
+	int NumberOfVertices() const
+	{
+		return m_vertices.size();
+	}
 
-	void add(Edge e);
+	vector<Vertex> getVertices()
+	{
+		return m_vertices;
+	}
 
-	void remove(Edge e);
-	//Finds the edge connecting verticies v and w
-	//returns an iterator to map key w in vector[v]
-	map<int, int>::iterator findEdge(int v1, int v2);
-
-	void print();
+private:
+	vector<Vertex> m_vertices;
 };
